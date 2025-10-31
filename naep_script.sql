@@ -1,0 +1,85 @@
+CREATE DATABASE naep;
+
+CREATE TABLE pesquisador (
+	id_pesquisador SERIAL PRIMARY KEY NOT NULL,
+	nome VARCHAR(100),
+	email VARCHAR(50),
+	cpf INT,
+	data_nasc DATE,
+
+	endereco VARCHAR(50),
+    estado VARCHAR(50),
+    cidade VARCHAR(50),
+    rua VARCHAR(50)
+);
+
+CREATE TABLE telefone_pesquisador (
+	id_pesquisador INT NOT NULL,
+	telefone VARCHAR(20),
+	PRIMARY KEY (id_pesquisador, telefone),
+	FOREIGN KEY (id_pesquisador) REFERENCES pesquisador(id_pesquisador)
+		ON DELETE CASCADE
+);
+
+CREATE TABLE status_pesquisa (
+	id_status_pesquisa SERIAL PRIMARY KEY,
+	status VARCHAR(20)
+);
+
+CREATE TABLE frequencia (
+	id_frequencia SERIAL PRIMARY KEY,
+	periodo VARCHAR(20)
+);
+
+CREATE TABLE pesquisa (
+	id_pesquisa SERIAL PRIMARY KEY NOT NULL,
+	descricao VARCHAR(50),
+	data_inicio VARCHAR(50),
+	data_fim VARCHAR(50),
+	id_frequencia INT NOT NULL,
+	id_status_pesquisa INT NOT NULL,
+	FOREIGN KEY (id_frequencia) REFERENCES frequencia(id_frequencia),
+	FOREIGN KEY (id_status_pesquisa) REFERENCES status_pesquisa(id_status_pesquisa)
+);
+
+CREATE TABLE bairro (
+	id_bairro SERIAL PRIMARY KEY,
+	nome VARCHAR(20),
+	id_frequencia INT NOT NULL,
+	FOREIGN KEY (id_frequencia) REFERENCES frequencia(id_frequencia)
+);
+
+CREATE TABLE equipe (
+	id_equipe SERIAL PRIMARY KEY NOT NULL,
+	nome VARCHAR(50),
+	id_pesquisador INT NOT NULL,
+	FOREIGN KEY (id_pesquisador) REFERENCES pesquisador(id_pesquisador)
+);
+
+CREATE TABLE tipo_unidade_tratamento (
+	id_tipo_uni_tratamento SERIAl PRIMARY KEY,
+	tipo VARCHAR(20)
+);
+
+CREATE TABLE unidade_tratamento (
+	id_unidade_tratamento SERIAL PRIMARY KEY,
+	nome VARCHAR(50),
+	id_tipo_uni_tratamento INT NOT NULL,
+
+	endereco VARCHAR(50),
+    estado VARCHAR(50),
+    cidade VARCHAR(50),
+    rua VARCHAR(50),
+	FOREIGN KEY (id_tipo_uni_tratamento) REFERENCES tipo_unidade_tratamento(id_tipo_uni_tratamento)
+);
+
+CREATE TABLE coleta (
+	id_coleta SERIAL PRIMARY KEY,
+	descricao VARCHAR(100),
+	quantidade_kg FLOAT,
+	categoria VARCHAR(20),
+	id_bairro INT NOT NULL,
+	id_unidade_tratamento INT NOT NULL,
+	FOREIGN KEY (id_unidade_tratamento) REFERENCES unidade_tratamento(id_unidade_tratamento),
+	FOREIGN KEY (id_bairro) REFERENCES bairro(id_bairro)
+);
