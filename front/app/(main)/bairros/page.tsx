@@ -4,6 +4,7 @@ import { Search } from "lucide-react"
 import { FormBairro } from "./_components/form_bairro"
 import { LinhaBairro } from "./_components/linha_bairro"
 import { bairros_exemplo, frequencias_exemplo } from "@/lib/exemplos"
+import { Header } from "@/app/_components/header"
 
 export interface Frequencia {
     id_frequencia: number
@@ -47,15 +48,10 @@ export default async function PageBairros() {
         <div className="px-5 pt-6">
 
             {/* Header */}
-            <section>
-                <h1 className="text-3xl font-semibold">
-                    Bairros
-                </h1>
-
-                <p className="text-gray-500 text-lg mt-1">
-                    Gerencie os bairros cadastrados
-                </p>
-            </section>
+            <Header
+                titulo="Bairros"
+                subtitulo="Gerencie os bairros cadastrados"
+            />
 
             {/* Busca e novo */}
             <section className="flex justify-between mt-8">

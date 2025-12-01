@@ -4,6 +4,7 @@ import { LinhaUnidade } from "./_components/linha_unidade";
 import { FormUnidade } from "./_components/form_unidade";
 import { Search } from "lucide-react";
 import { tipos_exemplo, unidades_exemplo } from "@/lib/exemplos";
+import { Header } from "@/app/_components/header";
 
 // Interfaces ===========================
 export interface TipoUnidade {
@@ -50,12 +51,10 @@ export default async function Home() {
         <div className="px-5 pt-6">
 
             {/* Header */}
-            <section>
-                <h1 className="text-3xl text-black font-semibold">Unidades de Tratamento</h1>
-                <p className="text-gray-500 text-lg mt-1">
-                    Gerencie as unidades cadastradas no sistema
-                </p>
-            </section>
+            <Header
+                titulo="Unidades de Tratamento"
+                subtitulo="Gerencie as unidades cadastradas no sistema"
+            />
 
             {/* Busca e adicionar */}
             <section className="flex justify-between mt-8">

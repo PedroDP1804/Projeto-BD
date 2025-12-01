@@ -4,6 +4,7 @@ import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components
 import { pesquisadores_exemplo } from "@/lib/exemplos";
 import { Search } from "lucide-react";
 import { LinhaPesquisador } from "./_components/linha_pesquisador";
+import { Header } from "@/app/_components/header";
 
 export interface Pesquisador {
     id?: number,
@@ -35,17 +36,10 @@ export default async function Home() {
         <div className="px-5 pt-6">
 
             {/* Header */}
-            <section>
-
-                <h1 className="text-3xl text-black font-semibold">
-                    Pesquisadores
-                </h1>
-
-                <p className="text-gray-500 text-lg mt-1">
-                    Gerencie os pesquisadores cadastrados no sistema
-                </p>
-
-            </section>
+            <Header
+                titulo="Pesquisadores"
+                subtitulo="Gerencie os pesquisadores cadastrados no sistema"
+            />
 
             {/* Busca e novo pesquisador */}
             <section className="flex justify-between mt-8">
