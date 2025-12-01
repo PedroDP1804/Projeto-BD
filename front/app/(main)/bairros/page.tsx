@@ -46,8 +46,16 @@ export default async function PageBairros() {
     return (
         <div className="px-5 pt-6">
 
-            <h1 className="text-3xl font-semibold">Bairros</h1>
-            <p className="text-gray-500 text-lg">Gerencie os bairros cadastrados</p>
+            {/* Header */}
+            <section>
+                <h1 className="text-3xl font-semibold">
+                    Bairros
+                </h1>
+
+                <p className="text-gray-500 text-lg mt-1">
+                    Gerencie os bairros cadastrados
+                </p>
+            </section>
 
             {/* Busca e novo */}
             <section className="flex justify-between mt-8">
