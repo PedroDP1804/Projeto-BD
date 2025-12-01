@@ -37,7 +37,7 @@ export function FormPesquisador({tipo, id_editar, default_value}:FormPesquisador
         
         if (tipo === "criar") {
             // ##----------------------------------------------------##
-            //  Inserir aqui a chamada de API
+            //  Inserir aqui a chamada de API pra CRIAR
                 // await funcaoAPI(data)
                 result = true
                 alert(JSON.stringify(data))
@@ -47,7 +47,7 @@ export function FormPesquisador({tipo, id_editar, default_value}:FormPesquisador
 
         if (tipo === "editar") {
             // ##----------------------------------------------------##
-            //  Inserir aqui a chamada de API
+            //  Inserir aqui a chamada de API pra EDITAR
                 // await funcaoAPI(data)
                 result = true
                 alert(JSON.stringify(data))
