@@ -1,6 +1,6 @@
 export default function Home() {
 
   return (
-    <h1>pinto</h1>
+    <h1>nada aqui por enquanto :/</h1>
   );
 }

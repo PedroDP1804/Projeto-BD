@@ -33,11 +33,11 @@ export function Sidebar() {
 
                     {/* Titulo */}
                     <div>
-                        <h1 className="text-xl font-bold">
+                        <h1 className="text-xl text-white font-bold">
                             SIG-NAEP
                         </h1>
 
-                        <h2 className="text-sm">
+                        <h2 className="text-sm text-white">
                             UnB • Itapoã
                         </h2>
                     </div>
