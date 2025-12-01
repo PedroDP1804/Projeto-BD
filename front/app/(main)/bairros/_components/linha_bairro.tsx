@@ -15,7 +15,10 @@ export function LinhaBairro({ bairro, frequencias }: {
     const router = useRouter()
 
     async function deleteBairro(id?: number) {
-        if (!id) return alert("ID inválido")
+        if (!id) {
+            alert("ID inválido")
+            return
+        }
 
         // ##----------------------------------------------------##
         //  Inserir aqui a chamada de API

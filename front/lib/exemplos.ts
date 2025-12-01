@@ -1,4 +1,5 @@
 import { Pesquisador } from "@/app/(main)/pesquisadores/page";
+import { TipoUnidade, Unidade } from "@/app/(main)/unidades/page";
 
 export const pesquisadores_exemplo:Pesquisador[] = [
     {
@@ -55,3 +56,59 @@ export const bairros_exemplo = [
     { id_bairro: 4, nome: "Del Lago", id_frequencia: 4, frequencia: { id_frequencia: 4, periodo: "Mensal" }},
     { id_bairro: 5, nome: "Paranoá Park", id_frequencia: 3, frequencia: { id_frequencia: 3, periodo: "Quinzenal" }},
 ]
+
+export const tipos_exemplo:TipoUnidade[] = [
+    { id_tipo_unidade: 1, tipo: "Desativada" },
+    { id_tipo_unidade: 2, tipo: "Temporária" },
+    { id_tipo_unidade: 3, tipo: "Básica" },
+    { id_tipo_unidade: 4, tipo: "Intermediária" },
+    { id_tipo_unidade: 5, tipo: "Avançada" },
+];
+
+export const unidades_exemplo:Unidade[] = [
+    {
+        id_unidade: 1,
+        nome: "Unidade Itapoã Norte",
+        endereco: "Quadra 203 Conj. 6",
+        estado: "DF",
+        cidade: "Brasília",
+        rua: "Rua das Mangueiras",
+        tipo: tipos_exemplo[2],
+    },
+    {
+        id_unidade: 2,
+        nome: "Centro de Tratamento Lago Azul",
+        endereco: "QI 10 Lote 18",
+        estado: "DF",
+        cidade: "Brasília",
+        rua: "Rua Ipê Amarelo",
+        tipo: tipos_exemplo[0],
+    },
+    {
+        id_unidade: 3,
+        nome: "Unidade Jardim Esperança",
+        endereco: "Quadra 425 Conj. 2",
+        estado: "DF",
+        cidade: "Brasília",
+        rua: "Rua do Cedro",
+        tipo: tipos_exemplo[4],
+    },
+    {
+        id_unidade: 4,
+        nome: "Estação Saúde Itapoã Sul",
+        endereco: "QI 32 Lote 7",
+        estado: "DF",
+        cidade: "Brasília",
+        rua: "Rua das Acácias",
+        tipo: tipos_exemplo[1],
+    },
+    {
+        id_unidade: 5,
+        nome: "Ponto de Atendimento Bem-Estar",
+        endereco: "Quadra 605 Conj. 4",
+        estado: "DF",
+        cidade: "Brasília",
+        rua: "Rua do Buriti",
+        tipo: tipos_exemplo[3],
+    },
+];
