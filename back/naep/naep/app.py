@@ -61,6 +61,18 @@ def update_pesquisador(pesquisador_id: int, pesquisador: PesquisadorSchema):
     return pesquisador_with_id
 
 
+@app.delete('/pesquisadores/{pesquisador_id}', response_model=Message)
+def delete_pesquisador(pesquisador_id: int):
+    if pesquisador_id > len(db_pesquisadores) or pesquisador_id < 1:
+        raise HTTPException(
+            status_code=HTTPStatus.NOT_FOUND, detail='Pesquisa not found'
+        )
+
+    del db_pesquisadores[pesquisador_id - 1]
+
+    return {'message': 'Pesquisador deleted'}
+
+
 @app.post('/pesquisas/', status_code=HTTPStatus.CREATED, response_model=PesquisaPublic)
 def create_pesquisa(pesquisa: PesquisaSchema):
     if pesquisa.id_pesquisador_responsavel > len(db_pesquisadores) or pesquisa.id_pesquisador_responsavel < 1:
@@ -91,3 +103,15 @@ def update_pesquisa(pesquisa_id: int, pesquisa: PesquisaSchema):
     db_pesquisas[pesquisa_id - 1] = pesquisa_with_id
 
     return pesquisa_with_id
+
+
+@app.delete('/pesquisas/{pesquisa_id}', response_model=Message)
+def delete_pesquisa(pesquisa_id: int):
+    if pesquisa_id > len(db_pesquisas) or pesquisa_id < 1:
+        raise HTTPException(
+            status_code=HTTPStatus.NOT_FOUND, detail='Pesquisa not found'
+        )
+
+    del db_pesquisas[pesquisa_id - 1]
+
+    return {'message': 'Pesquisa deleted'}

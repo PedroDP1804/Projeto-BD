@@ -77,6 +77,13 @@ def test_update_pesquisador(client):
     assert response.json() == expected_response
 
 
+def test_delete_pesquisador(client):
+    response = client.delete('/pesquisadores/1')
+
+    assert response.status_code == HTTPStatus.OK
+    assert response.json() == {'message': 'Pesquisador deleted'}
+
+
 def test_create_pesquisa(client):
     st = client.post('/status-pesquisa/', json={'status': 'Nova'}).json()
     pesq = client.post('/pesquisadores/', json={
