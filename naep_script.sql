@@ -38,8 +38,10 @@ CREATE TABLE pesquisa (
 	data_fim VARCHAR(50),
 	id_frequencia INT NOT NULL,
 	id_status_pesquisa INT NOT NULL,
+	id_equipe INT NOT NULL,
 	FOREIGN KEY (id_frequencia) REFERENCES frequencia(id_frequencia),
 	FOREIGN KEY (id_status_pesquisa) REFERENCES status_pesquisa(id_status_pesquisa)
+	FOREIGN KEY (id_equipe) REFERENCES equipe(id_equipe)
 );
 
 CREATE TABLE bairro (
