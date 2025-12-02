@@ -46,7 +46,7 @@ export function FormPesquisador({tipo, id_editar, default_value}:FormPesquisador
                 alert("Id inváido")
                 return
             }
-            alert(JSON.stringify(data))
+            
             const result = await updatePesquisador(data.id, data)
             ok = !!result
         }
