@@ -18,15 +18,16 @@ app = FastAPI(
 )
 
 origins = [
-    "http://localhost:3000", # Endereço do seu Front-end
+    "http://localhost:3000",      # Frontend Next.js
+    "http://127.0.0.1:3000",      # Alternativa localhost
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=origins,        # Permite essas origens
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"],          # Permite TODOS os métodos (GET, POST, PUT, DELETE)
+    allow_headers=["*"],          # Permite TODOS os headers
 )
 
 app.include_router(pesquisador_router.router)

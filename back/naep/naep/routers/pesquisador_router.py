@@ -26,11 +26,8 @@ def create_pesquisador(data: PesquisadorSchema, db: Session = Depends(get_db)):
         nome=data.nome,
         email=data.email,
         cpf=data.cpf,
-        data_nasc=data.data_nasc,
-        endereco=data.endereco,
-        estado=data.estado,
-        cidade=data.cidade,
-        rua=data.rua,
+        data_nascimento=data.data_nascimento,
+        status=data.status,
     )
 
     db.add(novo)
@@ -41,7 +38,7 @@ def create_pesquisador(data: PesquisadorSchema, db: Session = Depends(get_db)):
     for tel in data.telefones:
         db.add(
             TelefonePesquisador(
-                id_pesquisador=novo.id_pesquisador,
+                id_pesquisador=novo.id,
                 telefone=tel
             )
         )
@@ -52,7 +49,7 @@ def create_pesquisador(data: PesquisadorSchema, db: Session = Depends(get_db)):
     telefones = [
         t.telefone
         for t in db.query(TelefonePesquisador)
-        .filter(TelefonePesquisador.id_pesquisador == novo.id_pesquisador)
+        .filter(TelefonePesquisador.id_pesquisador == novo.id)
         .all()
     ]
 
@@ -75,7 +72,7 @@ def listar_pesquisadores(db: Session = Depends(get_db)):
         tels = [
             t.telefone
             for t in db.query(TelefonePesquisador)
-            .filter(TelefonePesquisador.id_pesquisador == p.id_pesquisador)
+            .filter(TelefonePesquisador.id_pesquisador == p.id)
             .all()
         ]
 
@@ -85,33 +82,12 @@ def listar_pesquisadores(db: Session = Depends(get_db)):
 
 
 # -------------------------------
-# Buscar por ID
-# -------------------------------
-@router.get("/{pesquisador_id}", response_model=PesquisadorPublic)
-def get_pesquisador(pesquisador_id: int, db: Session = Depends(get_db)):
-
-    p = db.query(Pesquisador).filter(Pesquisador.id_pesquisador == pesquisador_id).first()
-
-    if not p:
-        raise HTTPException(status_code=404, detail="Pesquisador não encontrado")
-
-    telefones = [
-        t.telefone
-        for t in db.query(TelefonePesquisador)
-        .filter(TelefonePesquisador.id_pesquisador == pesquisador_id)
-        .all()
-    ]
-
-    return PesquisadorPublic(**p.__dict__, telefones=telefones)
-
-
-# -------------------------------
 # Atualizar pesquisador
 # -------------------------------
-@router.put("/{pesquisador_id}", response_model=PesquisadorPublic)
-def update_pesquisador(pesquisador_id: int, data: PesquisadorSchema, db: Session = Depends(get_db)):
+@router.put("/{id}", response_model=PesquisadorPublic)
+def update_pesquisador(id: int, data: PesquisadorSchema, db: Session = Depends(get_db)):
 
-    p = db.query(Pesquisador).filter(Pesquisador.id_pesquisador == pesquisador_id).first()
+    p = db.query(Pesquisador).filter(Pesquisador.id == id).first()
 
     if not p:
         raise HTTPException(status_code=404, detail="Pesquisador não encontrado")
@@ -120,41 +96,46 @@ def update_pesquisador(pesquisador_id: int, data: PesquisadorSchema, db: Session
     p.nome = data.nome
     p.email = data.email
     p.cpf = data.cpf
-    p.data_nasc = data.data_nasc
-    p.endereco = data.endereco
-    p.estado = data.estado
-    p.cidade = data.cidade
-    p.rua = data.rua
+    p.data_nascimento = data.data_nascimento
 
     db.commit()
+    db.refresh(p)
 
     # Remover telefones antigos
     db.query(TelefonePesquisador).filter(
-        TelefonePesquisador.id_pesquisador == pesquisador_id
+        TelefonePesquisador.id_pesquisador == id
     ).delete()
 
     # Inserir telefones novos
     for tel in data.telefones:
         db.add(
             TelefonePesquisador(
-                id_pesquisador=pesquisador_id,
+                id_pesquisador=id,
                 telefone=tel,
             )
         )
 
     db.commit()
 
-    return PesquisadorPublic(**p.__dict__, telefones=data.telefones)
+    return PesquisadorPublic(
+        id=p.id,
+        nome=p.nome,
+        email=p.email,
+        cpf=p.cpf,
+        data_nascimento=p.data_nascimento,
+        status=p.status,
+        telefones=data.telefones
+    )
 
 
 # -------------------------------
 # Deletar pesquisador
 # -------------------------------
-@router.delete("/{pesquisador_id}", response_model=Message)
-def delete_pesquisador(pesquisador_id: int, db: Session = Depends(get_db)):
+@router.delete("/{id}", response_model=Message)
+def delete_pesquisador(id: int, db: Session = Depends(get_db)):
 
     p = db.query(Pesquisador).filter(
-        Pesquisador.id_pesquisador == pesquisador_id
+        Pesquisador.id == id
     ).first()
 
     if not p:
@@ -162,7 +143,7 @@ def delete_pesquisador(pesquisador_id: int, db: Session = Depends(get_db)):
 
     # Telefones têm DELETE CASCADE, mas apagamos manualmente para garantir
     db.query(TelefonePesquisador).filter(
-        TelefonePesquisador.id_pesquisador == pesquisador_id
+        TelefonePesquisador.id_pesquisador == id
     ).delete()
 
     db.delete(p)

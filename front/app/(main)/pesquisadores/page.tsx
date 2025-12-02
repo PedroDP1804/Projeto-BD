@@ -1,26 +1,14 @@
 import { FormPesquisador } from "@/app/(main)/pesquisadores/_components/form_pesquisador";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { pesquisadores_exemplo } from "@/lib/exemplos";
 import { Search } from "lucide-react";
 import { LinhaPesquisador } from "./_components/linha_pesquisador";
 import { Header } from "@/app/_components/header";
-import { Pesquisador } from "@/lib/interfaces";
+import { getPesquisadores } from "@/services/api";
 
 export default async function Home() {
 
     // Pega os Pesquisadores do BD
-    async function getPesquisadores() {
-
-        // ##----------------------------------------------------##
-        //  Inserir aqui a chamada de API
-
-        const result:Pesquisador[] = pesquisadores_exemplo //<---- aqui
-        // ##----------------------------------------------------##
-        
-        return result
-    }
-
     const pesquisadores = await getPesquisadores()
 
     return (

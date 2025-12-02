@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Dialog, DialogTrigger, } from "@/components/ui/dialog";
 import { FormPesquisador } from "./form_pesquisador";
 import { Pesquisador } from "@/lib/interfaces";
+import { deletePesquisador } from "@/services/api";
 
 export function LinhaPesquisador({pesquisador}:{pesquisador:Pesquisador}) {
 
@@ -12,20 +13,22 @@ export function LinhaPesquisador({pesquisador}:{pesquisador:Pesquisador}) {
     const router = useRouter()
 
     // exclui o pesquisador do BD e atualiza a página
-    async function deletePesquisador(id?:number) {
+    async function excluirPesquisador(id?:number) {
 
         if (!id) {
             alert("Id inválido")
             return
         }
         
-        // ##----------------------------------------------------##
-        //  Inserir aqui a chamada de API
-        const result = true //resultado da chamada
-        
-        // ##----------------------------------------------------##
+        let ok = true
+        try {
+            await deletePesquisador(id)
+        } catch (e) {
+            ok = false
+            console.error(e)
+        }
 
-        if (result){
+        if (ok){
             alert(`Pesquisador ${pesquisador.nome} (id=${id}) excluído com sucesso`)
             router.refresh()
         }
@@ -77,7 +80,7 @@ export function LinhaPesquisador({pesquisador}:{pesquisador:Pesquisador}) {
                         {/* Excluir */}
                         <button
                             type="button"
-                            onClick={()=>{deletePesquisador(pesquisador.id)}}
+                            onClick={()=>{excluirPesquisador(pesquisador.id)}}
                             className="cursor-pointer"
                         >
                             <Trash2 className="text-red-500"/>

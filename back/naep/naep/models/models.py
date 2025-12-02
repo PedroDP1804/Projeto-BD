@@ -11,24 +11,19 @@ table_registry = registry()
 class Pesquisador:
     __tablename__ = "pesquisador"
 
-    id_pesquisador: Mapped[int] = mapped_column(init=False, primary_key=True)
-    nome: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
-    email: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
-    cpf: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
-    data_nasc: Mapped[Optional[date]] = mapped_column(Date, nullable=True)
-
-    endereco: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
-    estado: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
-    cidade: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
-    rua: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
-
+    id: Mapped[int] = mapped_column(init=False, primary_key=True)
+    nome: Mapped[str] = mapped_column(String(100))
+    email: Mapped[str] = mapped_column(String(50))
+    cpf: Mapped[str] = mapped_column(String(20))
+    data_nascimento: Mapped[date] = mapped_column(Date)
+    status: Mapped[str] = mapped_column(String(50))
 
 @mapped_as_dataclass(table_registry)
 class TelefonePesquisador:
     __tablename__ = "telefone_pesquisador"
 
     id_pesquisador: Mapped[int] = mapped_column(
-        ForeignKey("pesquisador.id_pesquisador", ondelete="CASCADE"),
+        ForeignKey("pesquisador.id", ondelete="CASCADE"),
         primary_key=True
     )
     telefone: Mapped[str] = mapped_column(String(20), primary_key=True)
@@ -78,7 +73,7 @@ class Equipe:
 
     id_equipe: Mapped[int] = mapped_column(init=False, primary_key=True)
     nome: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
-    id_pesquisador: Mapped[int] = mapped_column(ForeignKey("pesquisador.id_pesquisador"))
+    id_pesquisador: Mapped[int] = mapped_column(ForeignKey("pesquisador.id"))
 
 
 @mapped_as_dataclass(table_registry)
@@ -96,7 +91,6 @@ class UnidadeTratamento:
     id_unidade_tratamento: Mapped[int] = mapped_column(init=False, primary_key=True)
     nome: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
     id_tipo_uni_tratamento: Mapped[int] = mapped_column(ForeignKey("tipo_unidade_tratamento.id_tipo_uni_tratamento"))
-
     endereco: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
     estado: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
     cidade: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)

@@ -9,29 +9,18 @@ class PesquisadorSchema(BaseModel):
     nome: str
     email: EmailStr
     cpf: str
-    data_nasc: date
-
-    endereco: str | None = None
-    estado: str | None = None
-    cidade: str | None = None
-    rua: str | None = None
-
-    telefones: List[str]
-
+    data_nascimento: date
+    status: str
+    telefones: list[str]
 
 # -------- Saída do BD --------
 class PesquisadorDB(BaseModel):
-    id_pesquisador: int
-    nome: str | None
-    email: str | None
-    cpf: str | None
-    data_nasc: date | None
-
-    endereco: str | None
-    estado: str | None
-    cidade: str | None
-    rua: str | None
-
+    id: int
+    nome: str
+    email: str
+    cpf: str
+    data_nascimento: date
+    status: str
     telefones: List[str] = []
 
     class Config:

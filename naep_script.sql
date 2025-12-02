@@ -1,23 +1,19 @@
 CREATE DATABASE naep;
 
 CREATE TABLE pesquisador (
-	id_pesquisador SERIAL PRIMARY KEY NOT NULL,
+	id SERIAL PRIMARY KEY NOT NULL,
 	nome VARCHAR(100),
 	email VARCHAR(50),
 	cpf INT,
-	data_nasc DATE,
-
-	endereco VARCHAR(50),
-    estado VARCHAR(50),
-    cidade VARCHAR(50),
-    rua VARCHAR(50)
-);
+	data_nascimento DATE,
+	status VARCHAR(10),
+)
 
 CREATE TABLE telefone_pesquisador (
 	id_pesquisador INT NOT NULL,
 	telefone VARCHAR(20),
 	PRIMARY KEY (id_pesquisador, telefone),
-	FOREIGN KEY (id_pesquisador) REFERENCES pesquisador(id_pesquisador)
+	FOREIGN KEY (id_pesquisador) REFERENCES pesquisador(id)
 		ON DELETE CASCADE
 );
 
@@ -55,7 +51,7 @@ CREATE TABLE equipe (
 	id_equipe SERIAL PRIMARY KEY NOT NULL,
 	nome VARCHAR(50),
 	id_pesquisador INT NOT NULL,
-	FOREIGN KEY (id_pesquisador) REFERENCES pesquisador(id_pesquisador)
+	FOREIGN KEY (id_pesquisador) REFERENCES pesquisador(id)
 );
 
 CREATE TABLE tipo_unidade_tratamento (

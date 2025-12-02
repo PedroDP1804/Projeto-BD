@@ -4,6 +4,7 @@ import { FormEvent } from "react";
 import { DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { TelefonesInput } from "./telefones_input";
 import { Pesquisador } from "@/lib/interfaces";
+import { createPesquisador, updatePesquisador } from "@/services/api";
 
 interface FormPesquisadorProps {
     tipo: "criar"|"editar",
@@ -23,7 +24,7 @@ export function FormPesquisador({tipo, id_editar, default_value}:FormPesquisador
         // extrai os dados do formulário
         const formData = new FormData(event.currentTarget)
         const data:Pesquisador = {
-            id: id_editar,
+            id: (tipo == "editar" ? id_editar : undefined),
             nome: formData.get("nome") as string,
             email: formData.get("email") as string,
             cpf: formData.get("cpf") as string,
@@ -32,31 +33,26 @@ export function FormPesquisador({tipo, id_editar, default_value}:FormPesquisador
             status: (formData.get("status") as string) as "Ativo"|"Inativo",
         }
 
-        let result = false
+        let ok = false
 
-        
+        // Chamada da API Create
         if (tipo === "criar") {
-            // ##----------------------------------------------------##
-            //  Inserir aqui a chamada de API pra CRIAR
-                // await funcaoAPI(data)
-                result = true
-                alert(JSON.stringify(data))
-                // alert(data.data_nascimento.toLocaleDateString("pt-br"))
-            // ##----------------------------------------------------##
+            const result = await createPesquisador(data)
+            ok = !!result
         }
 
         if (tipo === "editar") {
-            // ##----------------------------------------------------##
-            //  Inserir aqui a chamada de API pra EDITAR
-                // await funcaoAPI(data)
-                result = true
-                alert(JSON.stringify(data))
-                // alert(data.data_nascimento.toLocaleDateString("pt-br"))
-            // ##----------------------------------------------------##
+            if (!data.id) {
+                alert("Id inváido")
+                return
+            }
+            alert(JSON.stringify(data))
+            const result = await updatePesquisador(data.id, data)
+            ok = !!result
         }
 
         // Retorno
-        if (result) {
+        if (ok) {
             alert(`Pesquisador ${tipo === "criar" ? "criado" : "editado"} com sucesso`)
             router.refresh()
         } else
