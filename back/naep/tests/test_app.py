@@ -18,8 +18,8 @@ def test_create_pesquisador(client):
         'endereco': {
             'rua': 'Rua das Flores',
             'cidade': 'São Paulo',
-            'estado': 'SP'
-        }
+            'estado': 'SP',
+        },
     }
 
     response = client.post('/pesquisadores/', json=payload)
@@ -45,9 +45,9 @@ def test_update_pesquisador(client):
             'endereco': {
                 'rua': 'Rua A',
                 'cidade': 'São Paulo',
-                'estado': 'SP'
-            }
-        }
+                'estado': 'SP',
+            },
+        },
     )
     user_id = response_create.json()['id']
 
@@ -60,14 +60,11 @@ def test_update_pesquisador(client):
         'endereco': {
             'rua': 'Rua A',
             'cidade': 'Rio de Janeiro',
-            'estado': 'RJ'
-        }
+            'estado': 'RJ',
+        },
     }
 
-    response = client.put(
-        f'/pesquisadores/{user_id}',
-        json=pesquisador_update
-    )
+    response = client.put(f'/pesquisadores/{user_id}', json=pesquisador_update)
 
     assert response.status_code == HTTPStatus.OK
 
@@ -86,12 +83,20 @@ def test_delete_pesquisador(client):
 
 def test_create_pesquisa(client):
     st = client.post('/status-pesquisa/', json={'status': 'Nova'}).json()
-    pesq = client.post('/pesquisadores/', json={
-        'nome': 'Lider', 'email': 'l@l.com', 'cpf': '1',
-        'data_nasc': '1990-01-01', 'telefones': [],
-        'endereco': {'rua': 'x', 'cidade': 'x', 'estado': 'x'}
-    }).json()
-    eq = client.post('/equipes/', json={'nome': 'Eq1', 'ids_pesquisadores': [pesq['id']]}).json()
+    pesq = client.post(
+        '/pesquisadores/',
+        json={
+            'nome': 'Lider',
+            'email': 'l@l.com',
+            'cpf': '1',
+            'data_nasc': '1990-01-01',
+            'telefones': [],
+            'endereco': {'rua': 'x', 'cidade': 'x', 'estado': 'x'},
+        },
+    ).json()
+    eq = client.post(
+        '/equipes/', json={'nome': 'Eq1', 'ids_pesquisadores': [pesq['id']]}
+    ).json()
 
     payload = {
         'descricao': 'Análise da Água',
@@ -99,7 +104,7 @@ def test_create_pesquisa(client):
         'data_fim': '2025-02-01',
         'id_status_pesquisa': st['id'],
         'id_equipe': eq['id'],
-        'ids_frequencias': []
+        'ids_frequencias': [],
     }
 
     response = client.post('/pesquisas/', json=payload)
@@ -121,8 +126,17 @@ def test_update_pesquisa(client):
     pesquisa_update['descricao'] = 'Análise da Água (Atualizada)'
     del pesquisa_update['id']
 
-    response = client.put(f"/pesquisas/{pesquisa_alvo['id']}", json=pesquisa_update)
+    response = client.put(
+        f'/pesquisas/{pesquisa_alvo["id"]}', json=pesquisa_update
+    )
 
     assert response.status_code == HTTPStatus.OK
     assert response.json()['descricao'] == 'Análise da Água (Atualizada)'
     assert response.json()['id'] == pesquisa_alvo['id']
+
+
+def test_delete_pesquisa(client):
+    response = client.delete('/pesquisas/1')
+
+    assert response.status_code == HTTPStatus.OK
+    assert response.json() == {'message': 'Pesquisa deleted'}

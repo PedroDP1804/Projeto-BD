@@ -8,30 +8,13 @@ class Message(BaseModel):
     message: str
 
 
-class UserSchema(BaseModel):
-    username: str
-    email: EmailStr
-    password: str
-
-
-class UserPublic(BaseModel):
-    id: int
-    username: str
-    email: str
-
-
-class UserDB(UserSchema):
-    id: int
-
-
-class UserList(BaseModel):
-    users: list[UserPublic]
-
-
 class EnderecoSchema(BaseModel):
     rua: str
     cidade: str
     estado: str
+
+
+# Pesquisador
 
 
 class PesquisadorSchema(BaseModel):
@@ -55,6 +38,9 @@ class PesquisadorList(BaseModel):
     pesquisadores: List[PesquisadorPublic]
 
 
+# Pesquisa
+
+
 class PesquisaSchema(BaseModel):
     descricao: str
     data_inicio: date
@@ -73,3 +59,22 @@ class PesquisaPublic(PesquisaDB):
 
 class PesquisaList(BaseModel):
     pesquisas: List[PesquisaPublic]
+
+
+# Equipe
+
+
+class EquipeSchema(BaseModel):
+    nome: str
+
+
+class EquipeDB(EquipeSchema):
+    id: int
+
+
+class EquipePublic(EquipeDB):
+    pass
+
+
+class EquipeList(BaseModel):
+    equipes: List[EquipePublic]
