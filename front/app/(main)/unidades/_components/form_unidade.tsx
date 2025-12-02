@@ -1,9 +1,9 @@
 "use client";
 
 import { DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { TipoUnidade, Unidade } from "../page";
 import { FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import { TipoUnidade, Unidade } from "@/lib/interfaces";
 
 interface Props {
     tipo: "criar" | "editar";

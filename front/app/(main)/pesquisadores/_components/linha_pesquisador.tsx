@@ -3,8 +3,8 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import { Phone, SquarePen, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Dialog, DialogTrigger, } from "@/components/ui/dialog";
-import { Pesquisador } from "../page";
 import { FormPesquisador } from "./form_pesquisador";
+import { Pesquisador } from "@/lib/interfaces";
 
 export function LinhaPesquisador({pesquisador}:{pesquisador:Pesquisador}) {
 

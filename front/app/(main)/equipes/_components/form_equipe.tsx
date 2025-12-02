@@ -3,8 +3,7 @@
 import { useRouter } from "next/navigation";
 import { FormEvent } from "react";
 import { DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Equipe } from "../page";
-import { Pesquisador } from "../../pesquisadores/page";
+import { Equipe, Pesquisador } from "@/lib/interfaces";
 
 interface FormEquipeProps {
     tipo: "criar" | "editar",

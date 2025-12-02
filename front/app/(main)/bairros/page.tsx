@@ -5,18 +5,7 @@ import { FormBairro } from "./_components/form_bairro"
 import { LinhaBairro } from "./_components/linha_bairro"
 import { bairros_exemplo, frequencias_exemplo } from "@/lib/exemplos"
 import { Header } from "@/app/_components/header"
-
-export interface Frequencia {
-    id_frequencia: number
-    periodo: string
-}
-
-export interface Bairro {
-    id_bairro?: number
-    nome: string
-    id_frequencia: number
-    frequencia?: Frequencia
-}
+import { Bairro, Frequencia } from "@/lib/interfaces"
 
 export default async function PageBairros() {
 

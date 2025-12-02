@@ -1,9 +1,9 @@
 "use client"
 import { useRouter } from "next/navigation";
-import { Pesquisador } from "../page";
 import { FormEvent } from "react";
 import { DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { TelefonesInput } from "./telefones_input";
+import { Pesquisador } from "@/lib/interfaces";
 
 interface FormPesquisadorProps {
     tipo: "criar"|"editar",

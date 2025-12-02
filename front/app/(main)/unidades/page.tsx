@@ -5,22 +5,7 @@ import { FormUnidade } from "./_components/form_unidade";
 import { Search } from "lucide-react";
 import { tipos_exemplo, unidades_exemplo } from "@/lib/exemplos";
 import { Header } from "@/app/_components/header";
-
-// Interfaces ===========================
-export interface TipoUnidade {
-    id_tipo_unidade: number,
-    tipo: string,
-}
-
-export interface Unidade {
-    id_unidade?: number,
-    nome: string,
-    endereco: string,
-    estado: string,
-    cidade: string,
-    rua: string,
-    tipo: TipoUnidade,
-}
+import { TipoUnidade, Unidade } from "@/lib/interfaces";
 
 export default async function Home() {
     

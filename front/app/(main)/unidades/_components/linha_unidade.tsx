@@ -4,8 +4,8 @@ import { TableRow, TableCell } from "@/components/ui/table";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Trash2, SquarePen } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { Unidade, TipoUnidade } from "../page";
 import { FormUnidade } from "./form_unidade";
+import { TipoUnidade, Unidade } from "@/lib/interfaces";
 
 export function LinhaUnidade({
     unidade,

@@ -5,8 +5,7 @@ import { SquarePen, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { FormEquipe } from "./form_equipe";
-import { Equipe } from "../page";
-import { Pesquisador } from "../../pesquisadores/page";
+import { Equipe, Pesquisador } from "@/lib/interfaces";
 
 interface Props {
     equipe:Equipe,

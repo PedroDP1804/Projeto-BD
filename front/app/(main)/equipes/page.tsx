@@ -5,13 +5,7 @@ import { equipes_exemplo, pesquisadores_exemplo } from "@/lib/exemplos";
 import { Search } from "lucide-react";
 import { LinhaEquipe } from "./_components/linha_equipe";
 import { Header } from "@/app/_components/header";
-import { Pesquisador } from "../pesquisadores/page";
-
-export interface Equipe {
-    id_equipe?: number,
-    nome: string,
-    pesquisador: Pesquisador,
-}
+import { Equipe, Pesquisador } from "@/lib/interfaces";
 
 export default async function Home() {
 

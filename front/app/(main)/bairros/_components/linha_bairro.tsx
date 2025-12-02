@@ -4,8 +4,8 @@ import { TableCell, TableRow } from "@/components/ui/table"
 import { SquarePen, Trash2 } from "lucide-react"
 import { Dialog, DialogTrigger } from "@/components/ui/dialog"
 import { useRouter } from "next/navigation"
-import { Bairro, Frequencia } from "../page"
 import { FormBairro } from "./form_bairro"
+import { Bairro, Frequencia } from "@/lib/interfaces"
 
 export function LinhaBairro({ bairro, frequencias }: {
     bairro: Bairro,

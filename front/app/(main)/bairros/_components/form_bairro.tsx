@@ -1,9 +1,9 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { Bairro, Frequencia } from "../page"
 import { FormEvent } from "react"
 import { DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Bairro, Frequencia } from "@/lib/interfaces"
 
 interface FormBairroProps {
     tipo: "criar" | "editar"

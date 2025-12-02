@@ -5,16 +5,7 @@ import { pesquisadores_exemplo } from "@/lib/exemplos";
 import { Search } from "lucide-react";
 import { LinhaPesquisador } from "./_components/linha_pesquisador";
 import { Header } from "@/app/_components/header";
-
-export interface Pesquisador {
-    id?: number,
-    nome: string,
-    email: string,
-    cpf: string,
-    data_nascimento: Date,
-    telefones: string[],
-    status: "Ativo" | "Inativo",
-}
+import { Pesquisador } from "@/lib/interfaces";
 
 export default async function Home() {
 
