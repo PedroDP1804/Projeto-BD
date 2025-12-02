@@ -91,10 +91,10 @@ export function FormUnidade({ tipo, id_editar, default_value, tipos_unidade }: P
                         <select
                             name="id_tipo"
                             className="border px-3 py-2 rounded-md w-full"
-                            defaultValue={default_value?.tipo?.id_tipo_unidade}
+                            defaultValue={default_value?.tipo?.id_tipo_unidade ?? ""}
                             required
                         >
-                            <option disabled value={""}></option>
+                            <option disabled value="">-- Selecione um Tipo --</option>
                             {tipos_unidade.map((t) => (
                                 <option key={t.id_tipo_unidade} value={t.id_tipo_unidade}>
                                     {t.tipo}

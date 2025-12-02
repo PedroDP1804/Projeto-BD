@@ -85,7 +85,7 @@ export function FormBairro({ tipo, id_editar, default_value, frequencias }: Form
                     className="border-2 px-2 py-3 mt-1 w-[90%] rounded-md"
                     required
                 >
-                    <option disabled value="">Selecione…</option>
+                    <option disabled value="">-- Selecione uma Frequência --</option>
                     {frequencias.map((freq) => (
                         <option key={freq.id_frequencia} value={freq.id_frequencia}>
                             {freq.periodo}
