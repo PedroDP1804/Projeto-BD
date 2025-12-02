@@ -6,7 +6,6 @@ from sqlalchemy.orm import Session
 from naep.dependencies import get_db
 from naep.models import Bairro
 from naep.schemas.bairro_schema import (
-    BairroDB,
     BairroPublic,
     BairroSchema,
 )

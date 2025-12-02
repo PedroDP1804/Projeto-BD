@@ -1,62 +1,69 @@
-# CRUD - Equipe
-
+# naep/routers/equipe_router.py
 
 from http import HTTPStatus
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session
 
-from fastapi import APIRouter, HTTPException
-
+from naep.dependencies import get_db
+from naep.models import Equipe
 from naep.schemas.equipe_schema import (
-    EquipeDB,
-    EquipeList,
-    EquipePublic,
     EquipeSchema,
+    EquipePublic,
 )
 
-db_equipes = []
-
-router = APIRouter(prefix='/equipes', tags=['equipes'])
+router = APIRouter(prefix="/equipes", tags=["equipes"])
 
 
-@router.post(
-    '/',
-    status_code=HTTPStatus.CREATED,
-    response_model=EquipePublic,
-)
-def create_equipe(equipe: EquipeSchema):
-    equipe_with_id = EquipeDB(id=len(db_equipes) + 1, **equipe.model_dump())
+# Criar equipe
+@router.post("/", status_code=HTTPStatus.CREATED, response_model=EquipePublic)
+def create_equipe(equipe: EquipeSchema, db: Session = Depends(get_db)):
+    nova_equipe = Equipe(
+        nome=equipe.nome,
+        id_pesquisador=equipe.id_pesquisador,
+    )
 
-    db_equipes.append(equipe_with_id)
-    return equipe_with_id
+    db.add(nova_equipe)
+    db.commit()
+    db.refresh(nova_equipe)
 
-
-@router.get('/', response_model=EquipeList)
-def read_equipes():
-    return {'equipes': db_equipes}
+    return nova_equipe
 
 
-@router.get(
-    '/equipes/{equipe_id}',
-    status_code=HTTPStatus.OK,
-    response_model=EquipePublic,
-)
-def read_equipe_by_id(equipe_id: int):
-    if equipe_id > len(db_equipes) or equipe_id < 1:
-        raise HTTPException(
-            status_code=HTTPStatus.NOT_FOUND, detail='Equipe not found'
-        )
-
-    return db_equipes[equipe_id - 1]
+# Listar equipes
+@router.get("/", response_model=list[EquipePublic])
+def listar_equipes(db: Session = Depends(get_db)):
+    return db.query(Equipe).all()
 
 
-@router.put('/equipes/{equipe_id}', response_model=EquipePublic)
-def update_equipe(equipe_id: int, equipe: EquipeSchema):
-    if equipe_id > len(db_equipes) or equipe_id < 1:
+# Obter equipe por ID
+@router.get("/{equipe_id}", response_model=EquipePublic)
+def get_equipe(equipe_id: int, db: Session = Depends(get_db)):
+    equipe = db.query(Equipe).filter(Equipe.id_equipe == equipe_id).first()
+
+    if not equipe:
         raise HTTPException(
             status_code=HTTPStatus.NOT_FOUND,
-            detail='Equipe not found',
+            detail="Equipe não encontrada",
         )
 
-    equipe_with_id = EquipeDB(**equipe.model_dump(), id=equipe_id)
-    db_equipes[equipe_id - 1] = equipe_with_id
+    return equipe
 
-    return equipe_with_id
+
+# Atualizar equipe
+@router.put("/{equipe_id}", response_model=EquipePublic)
+def update_equipe(equipe_id: int, equipe: EquipeSchema, db: Session = Depends(get_db)):
+    equipe_db = db.query(Equipe).filter(Equipe.id_equipe == equipe_id).first()
+
+    if not equipe_db:
+        raise HTTPException(
+            status_code=HTTPStatus.NOT_FOUND,
+            detail="Equipe não encontrada",
+        )
+
+    equipe_db.nome = equipe.nome
+    equipe_db.id_pesquisador = equipe.id_pesquisador
+
+    db.commit()
+    db.refresh(equipe_db)
+
+    return equipe_db

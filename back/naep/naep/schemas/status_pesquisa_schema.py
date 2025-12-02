@@ -1,5 +1,4 @@
 from typing import List
-
 from pydantic import BaseModel
 
 # Status Pesquisa
@@ -9,8 +8,12 @@ class StatusPesquisaSchema(BaseModel):
     status: str
 
 
-class StatusPesquisaPublic(StatusPesquisaSchema):
+class StatusPesquisaDB(StatusPesquisaSchema):
     id: int
+
+
+class StatusPesquisaPublic(StatusPesquisaDB):
+    pass
 
 
 class StatusPesquisaList(BaseModel):

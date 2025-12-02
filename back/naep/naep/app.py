@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from naep.routers import (
     bairro_router,
@@ -6,7 +7,8 @@ from naep.routers import (
     pesquisador_router,
     pesquisas_router,
     status_pesquisa_router,
-    tipo_lixo_router,
+    unidade_tratamento_router,
+    tipo_unidade_router
 )
 
 app = FastAPI(
@@ -15,13 +17,25 @@ app = FastAPI(
     version="1.1.0"
 )
 
+origins = [
+    "http://localhost:3000", # Endereço do seu Front-end
+]
 
-# app.include_router(pesquisador_router.router)
-# app.include_router(pesquisas_router.router)
-# app.include_router(equipe_router.router)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app.include_router(pesquisador_router.router)
+app.include_router(pesquisas_router.router)
+app.include_router(equipe_router.router)
 app.include_router(bairro_router.router)
-# app.include_router(tipo_lixo_router.router)
-# app.include_router(status_pesquisa_router.router)
+app.include_router(tipo_unidade_router.router)
+app.include_router(status_pesquisa_router.router)
+app.include_router(unidade_tratamento_router.router)
 
 
 @app.get("/", tags=["Root"])

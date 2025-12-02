@@ -3,8 +3,6 @@ from typing import List
 
 from pydantic import BaseModel
 
-# Pesquisa
-
 
 class PesquisaSchema(BaseModel):
     descricao: str
