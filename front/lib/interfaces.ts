@@ -40,3 +40,27 @@ export interface Unidade {
     rua: string,
     tipo: TipoUnidade,
 }
+
+export interface Coleta {
+    id_coleta?: number,
+    descricao: string,
+    quantidade_kg: number,
+    categoria: string,
+    bairro: Bairro,
+    unidade_tratamento: Unidade,
+}
+
+export interface StatusPesquisa {
+    id_status_pesquisa: number;
+    status: string;
+}
+
+export interface Pesquisa {
+    id_pesquisa?: number;
+    descricao: string;
+    data_inicio: Date;
+    data_fim: Date;
+    frequencia: Frequencia;
+    status_pesquisa: StatusPesquisa;
+    equipe: Equipe;
+}

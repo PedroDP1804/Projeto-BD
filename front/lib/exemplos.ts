@@ -1,6 +1,4 @@
-import { Equipe } from "@/app/(main)/equipes/page";
-import { Pesquisador } from "@/app/(main)/pesquisadores/page";
-import { TipoUnidade, Unidade } from "@/app/(main)/unidades/page";
+import { Coleta, Equipe, Pesquisador, TipoUnidade, Unidade } from "./interfaces";
 
 export const pesquisadores_exemplo:Pesquisador[] = [
     {
@@ -129,4 +127,47 @@ export const equipes_exemplo:Equipe[] = [
     { id_equipe: 3, nome: "Equipe Linkin Park", pesquisador: pesquisadores_exemplo[2] },
     { id_equipe: 4, nome: "Equipe Campo Limpo", pesquisador: pesquisadores_exemplo[0] },
     { id_equipe: 5, nome: "Equipe Lírios", pesquisador: pesquisadores_exemplo[4] },
+];
+
+export const coletas_exemplo:Coleta[] = [
+    {
+        id_coleta: 1,
+        descricao: "Coleta de resíduos orgânicos domiciliares",
+        quantidade_kg: 125,
+        categoria: "Orgânico",
+        bairro: bairros_exemplo[2],
+        unidade_tratamento: unidades_exemplo[4],
+    },
+    {
+        id_coleta: 2,
+        descricao: "Coleta de recicláveis secos da área comercial",
+        quantidade_kg: 89,
+        categoria: "Recicláveis",
+        bairro: bairros_exemplo[0],
+        unidade_tratamento: unidades_exemplo[1],
+    },
+    {
+        id_coleta: 3,
+        descricao: "Coleta de entulho leve em via pública",
+        quantidade_kg: 310,
+        categoria: "Entulho",
+        bairro: bairros_exemplo[3],
+        unidade_tratamento: unidades_exemplo[2],
+    },
+    {
+        id_coleta: 4,
+        descricao: "Coleta de resíduos verdes após poda",
+        quantidade_kg: 450,
+        categoria: "Verde",
+        bairro: bairros_exemplo[1],
+        unidade_tratamento: unidades_exemplo[0],
+    },
+    {
+        id_coleta: 5,
+        descricao: "Coleta de volumosos em mutirão local",
+        quantidade_kg: 520,
+        categoria: "Volumosos",
+        bairro: bairros_exemplo[4],
+        unidade_tratamento: unidades_exemplo[3],
+    },
 ];
