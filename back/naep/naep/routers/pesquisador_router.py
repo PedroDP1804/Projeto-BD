@@ -1,15 +1,16 @@
 # naep/routers/pesquisador_router.py
 
 from http import HTTPStatus
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from naep.dependencies import get_db
 from naep.models import Pesquisador, TelefonePesquisador
 from naep.schemas.pesquisador_schema import (
-    PesquisadorSchema,
-    PesquisadorPublic,
     PesquisadorList,
+    PesquisadorPublic,
+    PesquisadorSchema,
 )
 from naep.schemas.schemas import Message
 

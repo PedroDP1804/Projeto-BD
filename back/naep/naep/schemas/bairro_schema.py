@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+
 # Schema recebido no POST (entrada)
 class BairroSchema(BaseModel):
     nome: str

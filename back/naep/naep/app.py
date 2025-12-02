@@ -7,8 +7,8 @@ from naep.routers import (
     pesquisador_router,
     pesquisas_router,
     status_pesquisa_router,
+    tipo_unidade_router,
     unidade_tratamento_router,
-    tipo_unidade_router
 )
 
 app = FastAPI(

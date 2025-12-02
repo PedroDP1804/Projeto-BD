@@ -18,6 +18,7 @@ class Pesquisador:
     data_nascimento: Mapped[date] = mapped_column(Date)
     status: Mapped[str] = mapped_column(String(50))
 
+
 @mapped_as_dataclass(table_registry)
 class TelefonePesquisador:
     __tablename__ = "telefone_pesquisador"

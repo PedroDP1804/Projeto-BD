@@ -6,7 +6,9 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from naep.dependencies import get_db
-from naep.models import StatusPesquisa  # Certifique-se de que o model StatusPesquisa existe
+from naep.models import (
+    StatusPesquisa,  # Certifique-se de que o model StatusPesquisa existe
+)
 from naep.schemas.schemas import Message
 from naep.schemas.status_pesquisa_schema import (
     StatusPesquisaPublic,
@@ -60,8 +62,8 @@ def read_status_by_id(status_id: int, db: Session = Depends(get_db)):
     response_model=StatusPesquisaPublic,
 )
 def update_status(
-    status_id: int, 
-    status_schema: StatusPesquisaSchema, 
+    status_id: int,
+    status_schema: StatusPesquisaSchema,
     db: Session = Depends(get_db)
 ):
     status_db = db.query(StatusPesquisa).filter(StatusPesquisa.id_status_pesquisa == status_id).first()

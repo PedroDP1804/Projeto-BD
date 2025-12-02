@@ -1,6 +1,7 @@
 # naep/schemas/pesquisador_schema.py
 from datetime import date
 from typing import List
+
 from pydantic import BaseModel, EmailStr
 
 
@@ -12,6 +13,7 @@ class PesquisadorSchema(BaseModel):
     data_nascimento: date
     status: str
     telefones: list[str]
+
 
 # -------- Saída do BD --------
 class PesquisadorDB(BaseModel):

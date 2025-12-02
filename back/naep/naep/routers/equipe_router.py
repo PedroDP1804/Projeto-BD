@@ -1,14 +1,15 @@
 # naep/routers/equipe_router.py
 
 from http import HTTPStatus
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from naep.dependencies import get_db
 from naep.models import Equipe
 from naep.schemas.equipe_schema import (
-    EquipeSchema,
     EquipePublic,
+    EquipeSchema,
 )
 
 router = APIRouter(prefix="/equipes", tags=["equipes"])

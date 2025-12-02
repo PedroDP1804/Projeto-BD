@@ -2,6 +2,7 @@ from pydantic import BaseModel
 
 # Tipo de Unidade de Tratamento (ex.: Reciclagem, Compostagem, Aterro, etc.)
 
+
 class TipoUnidadeSchema(BaseModel):
     tipo: str  # nome da categoria/tipo
 

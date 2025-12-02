@@ -1,14 +1,14 @@
 from .models import (
-    Pesquisador,
-    TelefonePesquisador,
-    StatusPesquisa,
+    Bairro,
+    Coleta,
+    Equipe,
     Frequencia,
     Pesquisa,
-    Bairro,
-    Equipe,
+    Pesquisador,
+    StatusPesquisa,
+    TelefonePesquisador,
     TipoUnidadeTratamento,
     UnidadeTratamento,
-    Coleta,
 )
 
 __all__ = [

@@ -1,14 +1,15 @@
 from http import HTTPStatus
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from naep.dependencies import get_db
 from naep.models import TipoUnidadeTratamento
-from naep.schemas.tipo_unidade_schema import (
-    TipoUnidadeSchema,
-    TipoUnidadePublic,
-)
 from naep.schemas.schemas import Message
+from naep.schemas.tipo_unidade_schema import (
+    TipoUnidadePublic,
+    TipoUnidadeSchema,
+)
 
 router = APIRouter(prefix="/tipos_unidade", tags=["tipos_unidade"])
 

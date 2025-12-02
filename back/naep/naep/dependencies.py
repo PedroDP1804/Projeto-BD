@@ -1,5 +1,7 @@
 from naep.database import SessionLocal
-#from fastapi import Depends
+
+# from fastapi import Depends
+
 
 def get_db():
     db = SessionLocal()

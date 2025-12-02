@@ -6,7 +6,9 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from naep.dependencies import get_db
-from naep.models import Pesquisa  # Certifique-se de que o model Pesquisa existe em naep.models
+from naep.models import (
+    Pesquisa,  # Certifique-se de que o model Pesquisa existe em naep.models
+)
 from naep.schemas.pesquisa_schema import (
     PesquisaPublic,
     PesquisaSchema,
@@ -74,8 +76,8 @@ def read_pesquisa_by_id(pesquisa_id: int, db: Session = Depends(get_db)):
     response_model=PesquisaPublic,
 )
 def update_pesquisa(
-    pesquisa_id: int, 
-    pesquisa_atualizada: PesquisaSchema, 
+    pesquisa_id: int,
+    pesquisa_atualizada: PesquisaSchema,
     db: Session = Depends(get_db)
 ):
     # Verifica se existe
@@ -93,7 +95,7 @@ def update_pesquisa(
 
     db.commit()
     db.refresh(pesquisa_db)
-    
+
     return pesquisa_db
 
 
