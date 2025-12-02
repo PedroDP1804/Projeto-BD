@@ -147,7 +147,7 @@ export function FormPesquisador({tipo, id_editar, default_value}:FormPesquisador
                     className="border-2 indent-2 px-2 py-3 mt-1 w-[90%] rounded-md min-w-[200px]"
                     required={tipo=="criar"}
                 >
-                    <option disabled></option>
+                    <option disabled value="">-- Selecione um Status --</option>
                     <option value="Ativo">
                         Ativo
                     </option>

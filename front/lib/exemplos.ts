@@ -1,3 +1,4 @@
+import { Equipe } from "@/app/(main)/equipes/page";
 import { Pesquisador } from "@/app/(main)/pesquisadores/page";
 import { TipoUnidade, Unidade } from "@/app/(main)/unidades/page";
 
@@ -37,6 +38,15 @@ export const pesquisadores_exemplo:Pesquisador[] = [
         data_nascimento: new Date(1985, 0, 18), //"18/01/1985"
         telefones: ["98888-2222", "90000-1111"],
         status: "Inativo",
+    },
+    {
+        id: 5,
+        nome: "Cleiton Santos",
+        email: "cleiton.santos@exemplo.com",
+        cpf: "522.444.999-25",
+        data_nascimento: new Date(1985, 0, 19), //"18/01/1985"
+        telefones: ["98038-4444", "90000-1111", "1224-9090"],
+        status: "Ativo",
     },
 ];
 
@@ -111,4 +121,12 @@ export const unidades_exemplo:Unidade[] = [
         rua: "Rua do Buriti",
         tipo: tipos_exemplo[3],
     },
+];
+
+export const equipes_exemplo:Equipe[] = [
+    { id_equipe: 1, nome: "Equipe Cerrado", pesquisador: pesquisadores_exemplo[1] },
+    { id_equipe: 2, nome: "Equipe Savana", pesquisador: pesquisadores_exemplo[3] },
+    { id_equipe: 3, nome: "Equipe Linkin Park", pesquisador: pesquisadores_exemplo[2] },
+    { id_equipe: 4, nome: "Equipe Campo Limpo", pesquisador: pesquisadores_exemplo[0] },
+    { id_equipe: 5, nome: "Equipe Lírios", pesquisador: pesquisadores_exemplo[4] },
 ];
