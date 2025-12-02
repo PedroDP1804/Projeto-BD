@@ -16,12 +16,12 @@ app = FastAPI(
 )
 
 
-app.include_router(pesquisador_router.router)
-app.include_router(pesquisas_router.router)
-app.include_router(equipe_router.router)
+# app.include_router(pesquisador_router.router)
+# app.include_router(pesquisas_router.router)
+# app.include_router(equipe_router.router)
 app.include_router(bairro_router.router)
-app.include_router(tipo_lixo_router.router)
-app.include_router(status_pesquisa_router.router)
+# app.include_router(tipo_lixo_router.router)
+# app.include_router(status_pesquisa_router.router)
 
 
 @app.get("/", tags=["Root"])

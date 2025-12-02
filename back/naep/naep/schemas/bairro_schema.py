@@ -1,21 +1,19 @@
-from typing import List
-
 from pydantic import BaseModel
 
-# Bairro
-
-
+# Schema recebido no POST (entrada)
 class BairroSchema(BaseModel):
     nome: str
+    id_frequencia: int
 
 
+# Schema retornado pelo banco (saída)
 class BairroDB(BairroSchema):
-    id: int
+    id_bairro: int
+
+    class Config:
+        from_attributes = True  # permite converter objetos SQLAlchemy para Pydantic
 
 
+# Schema público retornado nas rotas
 class BairroPublic(BairroDB):
     pass
-
-
-class BairroList(BaseModel):
-    bairros: List[BairroPublic]
