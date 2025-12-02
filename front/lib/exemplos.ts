@@ -1,4 +1,4 @@
-import { Coleta, Equipe, Pesquisador, TipoUnidade, Unidade } from "./interfaces";
+import { Coleta, Equipe, Pesquisa, Pesquisador, StatusPesquisa, TipoUnidade, Unidade } from "./interfaces";
 
 export const pesquisadores_exemplo:Pesquisador[] = [
     {
@@ -169,5 +169,61 @@ export const coletas_exemplo:Coleta[] = [
         categoria: "Volumosos",
         bairro: bairros_exemplo[4],
         unidade_tratamento: unidades_exemplo[3],
+    },
+];
+
+export const status_pesquisa_exemplo:StatusPesquisa[] = [
+    { id_status_pesquisa: 1, status: "Planejada" },
+    { id_status_pesquisa: 2, status: "Em andamento" },
+    { id_status_pesquisa: 3, status: "Concluída" },
+    { id_status_pesquisa: 4, status: "Cancelada" },
+    { id_status_pesquisa: 5, status: "Suspensa" },
+];
+
+export const pesquisas_exemplo: Pesquisa[] = [
+    {
+        id_pesquisa: 1,
+        descricao: "Avaliação de coleta e descarte no setor Itapoã Norte",
+        data_inicio: new Date(2024, 0, 10), // 10/01/2024
+        data_fim: new Date(2024, 2, 15),    // 15/03/2024
+        frequencia: frequencias_exemplo[1], // Semanal
+        status_pesquisa: status_pesquisa_exemplo[1], // Em andamento
+        equipe: equipes_exemplo[0],
+    },
+    {
+        id_pesquisa: 2,
+        descricao: "Mapeamento de resíduos orgânicos em áreas comerciais",
+        data_inicio: new Date(2023, 5, 1),  // 01/06/2023
+        data_fim: new Date(2023, 10, 28),   // 28/11/2023
+        frequencia: frequencias_exemplo[3], // Mensal
+        status_pesquisa: status_pesquisa_exemplo[2], // Concluída
+        equipe: equipes_exemplo[2],
+    },
+    {
+        id_pesquisa: 3,
+        descricao: "Estudo sobre geração de entulho em obras residenciais",
+        data_inicio: new Date(2024, 3, 5), // 05/04/2024
+        data_fim: new Date(2024, 8, 30),   // 30/09/2024
+        frequencia: frequencias_exemplo[0], // Diária
+        status_pesquisa: status_pesquisa_exemplo[0], // Planejada
+        equipe: equipes_exemplo[3],
+    },
+    {
+        id_pesquisa: 4,
+        descricao: "Monitoramento de resíduos verdes após ações de poda urbana",
+        data_inicio: new Date(2024, 1, 12), // 12/02/2024
+        data_fim: new Date(2024, 5, 14),    // 14/06/2024
+        frequencia: frequencias_exemplo[4], // Semestral
+        status_pesquisa: status_pesquisa_exemplo[3], // Cancelada
+        equipe: equipes_exemplo[1],
+    },
+    {
+        id_pesquisa: 5,
+        descricao: "Estudo de geração de volumosos em mutirões comunitários",
+        data_inicio: new Date(2023, 8, 20), // 20/09/2023
+        data_fim: new Date(2024, 0, 20),    // 20/01/2024
+        frequencia: frequencias_exemplo[2], // Quinzenal
+        status_pesquisa: status_pesquisa_exemplo[4], // Suspensa
+        equipe: equipes_exemplo[4],
     },
 ];
