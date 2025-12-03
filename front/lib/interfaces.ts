@@ -9,15 +9,14 @@ export interface Pesquisador {
 }
 
 export interface Frequencia {
-    id_frequencia: number
+    id: number
     periodo: string
 }
 
 export interface Bairro {
-    id_bairro?: number
+    id?: number
     nome: string
-    id_frequencia: number
-    frequencia?: Frequencia
+    id_frequencia: number,
 }
 
 export interface Equipe {

@@ -23,8 +23,15 @@ CREATE TABLE status_pesquisa (
 );
 
 CREATE TABLE frequencia (
-	id_frequencia SERIAL PRIMARY KEY,
+	id SERIAL PRIMARY KEY,
 	periodo VARCHAR(20)
+);
+
+CREATE TABLE bairro (
+	id SERIAL PRIMARY KEY,
+	nome VARCHAR(20),
+	id_frequencia INT NOT NULL,
+	FOREIGN KEY (id_frequencia) REFERENCES frequencia(id)
 );
 
 CREATE TABLE pesquisa (
@@ -35,17 +42,11 @@ CREATE TABLE pesquisa (
 	id_frequencia INT NOT NULL,
 	id_status_pesquisa INT NOT NULL,
 	id_equipe INT NOT NULL,
-	FOREIGN KEY (id_frequencia) REFERENCES frequencia(id_frequencia),
+	FOREIGN KEY (id_frequencia) REFERENCES frequencia(id),
 	FOREIGN KEY (id_status_pesquisa) REFERENCES status_pesquisa(id_status_pesquisa)
 	FOREIGN KEY (id_equipe) REFERENCES equipe(id_equipe)
 );
 
-CREATE TABLE bairro (
-	id_bairro SERIAL PRIMARY KEY,
-	nome VARCHAR(20),
-	id_frequencia INT NOT NULL,
-	FOREIGN KEY (id_frequencia) REFERENCES frequencia(id_frequencia)
-);
 
 CREATE TABLE equipe (
 	id_equipe SERIAL PRIMARY KEY NOT NULL,
@@ -79,5 +80,5 @@ CREATE TABLE coleta (
 	id_bairro INT NOT NULL,
 	id_unidade_tratamento INT NOT NULL,
 	FOREIGN KEY (id_unidade_tratamento) REFERENCES unidade_tratamento(id_unidade_tratamento),
-	FOREIGN KEY (id_bairro) REFERENCES bairro(id_bairro)
+	FOREIGN KEY (id_bairro) REFERENCES bairro(id)
 );

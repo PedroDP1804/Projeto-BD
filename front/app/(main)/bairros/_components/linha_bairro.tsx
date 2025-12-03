@@ -6,6 +6,7 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog"
 import { useRouter } from "next/navigation"
 import { FormBairro } from "./form_bairro"
 import { Bairro, Frequencia } from "@/lib/interfaces"
+import { deleteBairro } from "@/services/api_bairro"
 
 export function LinhaBairro({ bairro, frequencias }: {
     bairro: Bairro,
@@ -13,20 +14,23 @@ export function LinhaBairro({ bairro, frequencias }: {
 }) {
 
     const router = useRouter()
+    const frequencia = frequencias.findLast((f)=>(f.id == bairro.id_frequencia))
 
-    async function deleteBairro(id?: number) {
+    async function excluirBairro(id?: number) {
         if (!id) {
             alert("ID inválido")
             return
         }
 
-        // ##----------------------------------------------------##
-        //  Inserir aqui a chamada de API
-        const result = true //resultado da chamada
-        
-        // ##----------------------------------------------------##
+        let ok = false
+        try {
+            await deleteBairro(id)
+            ok = true
+        } catch (e) {
+            console.error(e)
+        }
 
-        if (result) {
+        if (ok) {
             alert(`Bairro ${bairro.nome} excluído`)
             router.refresh()
         }
@@ -35,7 +39,7 @@ export function LinhaBairro({ bairro, frequencias }: {
     return (
         <TableRow className="h-16">
             <TableCell className="indent-3">{bairro.nome}</TableCell>
-            <TableCell>{bairro.frequencia?.periodo}</TableCell>
+            <TableCell>{frequencia?.periodo ?? '-'}</TableCell>
 
             <TableCell>
                 <div className="flex items-center justify-end gap-4 pr-9">
@@ -47,7 +51,7 @@ export function LinhaBairro({ bairro, frequencias }: {
 
                         <FormBairro
                             tipo="editar"
-                            id_editar={bairro.id_bairro}
+                            id_editar={bairro.id}
                             default_value={bairro}
                             frequencias={frequencias}
                         />
@@ -55,7 +59,7 @@ export function LinhaBairro({ bairro, frequencias }: {
 
                     <button
                         type="button"
-                        onClick={() => deleteBairro(bairro.id_bairro)}
+                        onClick={() => excluirBairro(bairro.id)}
                         className="cursor-pointer"
                     >
                         <Trash2 className="text-red-500" />

@@ -1,4 +1,4 @@
-import { Coleta, Equipe, Pesquisa, Pesquisador, StatusPesquisa, TipoUnidade, Unidade } from "./interfaces";
+import { Bairro, Coleta, Equipe, Frequencia, Pesquisa, Pesquisador, StatusPesquisa, TipoUnidade, Unidade } from "./interfaces";
 
 export const pesquisadores_exemplo:Pesquisador[] = [
     {
@@ -48,21 +48,21 @@ export const pesquisadores_exemplo:Pesquisador[] = [
     },
 ];
 
-export const frequencias_exemplo = [
-    { id_frequencia: 1, periodo: "Diária" },
-    { id_frequencia: 2, periodo: "Semanal" },
-    { id_frequencia: 3, periodo: "Quinzenal" },
-    { id_frequencia: 4, periodo: "Mensal" },
-    { id_frequencia: 5, periodo: "Semestral" },
-    { id_frequencia: 6, periodo: "Anual" },
+export const frequencias_exemplo:Frequencia[] = [
+    { id: 1, periodo: "Diária" },
+    { id: 2, periodo: "Semanal" },
+    { id: 3, periodo: "Quinzenal" },
+    { id: 4, periodo: "Mensal" },
+    { id: 5, periodo: "Semestral" },
+    { id: 6, periodo: "Anual" },
 ]
 
-export const bairros_exemplo = [
-    { id_bairro: 1, nome: "Itapoã I", id_frequencia: 1, frequencia: { id_frequencia: 1, periodo: "Diária" }},
-    { id_bairro: 2, nome: "Itapoã II", id_frequencia: 2, frequencia: { id_frequencia: 2, periodo: "Semanal" }},
-    { id_bairro: 3, nome: "Itapoã III", id_frequencia: 5, frequencia: { id_frequencia: 5, periodo: "Semestral" }},
-    { id_bairro: 4, nome: "Del Lago", id_frequencia: 4, frequencia: { id_frequencia: 4, periodo: "Mensal" }},
-    { id_bairro: 5, nome: "Paranoá Park", id_frequencia: 3, frequencia: { id_frequencia: 3, periodo: "Quinzenal" }},
+export const bairros_exemplo:Bairro[] = [
+    { id: 1, nome: "Itapoã I", id_frequencia: 1},
+    { id: 2, nome: "Itapoã II", id_frequencia: 2},
+    { id: 3, nome: "Itapoã III", id_frequencia: 5},
+    { id: 4, nome: "Del Lago", id_frequencia: 4},
+    { id: 5, nome: "Paranoá Park", id_frequencia: 3},
 ]
 
 export const tipos_exemplo:TipoUnidade[] = [

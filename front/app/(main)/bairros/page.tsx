@@ -3,33 +3,12 @@ import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components
 import { Search } from "lucide-react"
 import { FormBairro } from "./_components/form_bairro"
 import { LinhaBairro } from "./_components/linha_bairro"
-import { bairros_exemplo, frequencias_exemplo } from "@/lib/exemplos"
 import { Header } from "@/app/_components/header"
-import { Bairro, Frequencia } from "@/lib/interfaces"
+import { getBairros } from "@/services/api_bairro"
+import { getFrequencias } from "@/services/apis"
 
 export default async function PageBairros() {
-
-    async function getFrequencias(): Promise<Frequencia[]> {
-
-        // ##----------------------------------------------------##
-        //  Inserir aqui a chamada de API
-
-        const result:Frequencia[] = frequencias_exemplo //<---- aqui
-        // ##----------------------------------------------------##
-        
-        return result
-    }
     
-    async function getBairros(): Promise<Bairro[]> {
-        // ##----------------------------------------------------##
-        //  Inserir aqui a chamada de API
-    
-        const result:Bairro[] = bairros_exemplo //<---- aqui
-        // ##----------------------------------------------------##
-        
-        return result
-    }
-
     const frequencias = await getFrequencias()
     const bairros = await getBairros()
 
@@ -68,7 +47,7 @@ export default async function PageBairros() {
                         <TableHeader className="bg-gray-100">
                             <TableRow>
                                 <TableHead className="indent-3">Nome</TableHead>
-                                <TableHead>Frequência</TableHead>
+                                <TableHead>Frequência da Coleta</TableHead>
                                 <TableHead className="flex justify-end pr-15">Ações</TableHead>
                             </TableRow>
                         </TableHeader>
@@ -76,7 +55,7 @@ export default async function PageBairros() {
                         <TableBody>
                             {bairros.map((b) => (
                                 <LinhaBairro
-                                    key={b.id_bairro}
+                                    key={b.id}
                                     bairro={b}
                                     frequencias={frequencias}
                                 />

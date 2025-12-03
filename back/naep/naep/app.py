@@ -8,7 +8,8 @@ from naep.routers import (
     pesquisas_router,
     status_pesquisa_router,
     unidade_tratamento_router,
-    tipo_unidade_router
+    tipo_unidade_router,
+    routers
 )
 
 app = FastAPI(
@@ -37,6 +38,7 @@ app.include_router(bairro_router.router)
 app.include_router(tipo_unidade_router.router)
 app.include_router(status_pesquisa_router.router)
 app.include_router(unidade_tratamento_router.router)
+app.include_router(routers.router)
 
 
 @app.get("/", tags=["Root"])

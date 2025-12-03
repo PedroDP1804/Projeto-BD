@@ -41,7 +41,7 @@ class StatusPesquisa:
 class Frequencia:
     __tablename__ = "frequencia"
 
-    id_frequencia: Mapped[int] = mapped_column(init=False, primary_key=True)
+    id: Mapped[int] = mapped_column(init=False, primary_key=True)
     periodo: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
 
 
@@ -54,7 +54,7 @@ class Pesquisa:
     data_inicio: Mapped[Optional[date]] = mapped_column(Date, nullable=True)
     data_fim: Mapped[Optional[date]] = mapped_column(Date, nullable=True)
 
-    id_frequencia: Mapped[int] = mapped_column(ForeignKey("frequencia.id_frequencia"))
+    id_frequencia: Mapped[int] = mapped_column(ForeignKey("frequencia.id"))
     id_status_pesquisa: Mapped[int] = mapped_column(ForeignKey("status_pesquisa.id_status_pesquisa"))
 
 
@@ -62,9 +62,9 @@ class Pesquisa:
 class Bairro:
     __tablename__ = "bairro"
 
-    id_bairro: Mapped[int] = mapped_column(init=False, primary_key=True)
+    id: Mapped[int] = mapped_column(init=False, primary_key=True)
     nome: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
-    id_frequencia: Mapped[int] = mapped_column(ForeignKey("frequencia.id_frequencia"))
+    id_frequencia: Mapped[int] = mapped_column(ForeignKey("frequencia.id"))
 
 
 @mapped_as_dataclass(table_registry)
@@ -106,5 +106,5 @@ class Coleta:
     quantidade_kg: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
     categoria: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
 
-    id_bairro: Mapped[int] = mapped_column(ForeignKey("bairro.id_bairro"))
+    id_bairro: Mapped[int] = mapped_column(ForeignKey("bairro.id"))
     id_unidade_tratamento: Mapped[int] = mapped_column(ForeignKey("unidade_tratamento.id_unidade_tratamento"))

@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation"
 import { FormEvent } from "react"
 import { DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Bairro, Frequencia } from "@/lib/interfaces"
+import { createBairro, updateBairro } from "@/services/api_bairro"
 
 interface FormBairroProps {
     tipo: "criar" | "editar"
@@ -20,36 +21,33 @@ export function FormBairro({ tipo, id_editar, default_value, frequencias }: Form
         event.preventDefault()
 
         const formData = new FormData(event.currentTarget)
-
+        
         const data: Bairro = {
-            id_bairro: id_editar,
+            id: id_editar,
             nome: formData.get("nome") as string,
             id_frequencia: Number(formData.get("id_frequencia")),
         }
-
-        let result = false
-
+        
+        let ok = false
+        
+        // Chamada da API Create
         if (tipo === "criar") {
-            // ##----------------------------------------------------##
-            //  Inserir aqui a chamada de API pra CRIAR
-                // await funcaoAPI(data)
-                result = true
-                alert(JSON.stringify(data))
-                // alert(data.data_nascimento.toLocaleDateString("pt-br"))
-            // ##----------------------------------------------------##
+            const result = await createBairro(data)
+            ok = !!result
         }
 
+        // Chamada da API Edit
         if (tipo === "editar") {
-            // ##----------------------------------------------------##
-            //  Inserir aqui a chamada de API pra EDITAR
-                // await funcaoAPI(data)
-                result = true
-                alert(JSON.stringify(data))
-                // alert(data.data_nascimento.toLocaleDateString("pt-br"))
-            // ##----------------------------------------------------##
+            if (!data.id) {
+                alert("Id inváido")
+                return
+            }
+            
+            const result = await updateBairro(data.id, data)
+            ok = !!result
         }
 
-        if (result) {
+        if (ok) {
             alert(`Bairro ${tipo === "criar" ? "criado" : "editado"} com sucesso`)
             router.refresh()
         } else {
@@ -87,7 +85,7 @@ export function FormBairro({ tipo, id_editar, default_value, frequencias }: Form
                 >
                     <option disabled value="">-- Selecione uma Frequência --</option>
                     {frequencias.map((freq) => (
-                        <option key={freq.id_frequencia} value={freq.id_frequencia}>
+                        <option key={freq.id} value={freq.id}>
                             {freq.periodo}
                         </option>
                     ))}
