@@ -1,6 +1,4 @@
 from pydantic import BaseModel
-from typing import List
-from naep.schemas.schemas import FrequenciaPublic
 
 # -------- Entrada (POST / PUT) --------
 class BairroSchema(BaseModel):
@@ -13,7 +11,7 @@ class BairroDB(BairroSchema):
     id: int
 
     class Config:
-        from_attributes = True  # permite converter objetos SQLAlchemy para Pydantic
+        from_attributes = True
 
 
 # -------- Schema público retornado nas rotas --------

@@ -5,8 +5,6 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL
 // 1. GET (Listar todos os bairros)
 export async function getBairros(): Promise<Bairro[]> {
 
-        console.log(API_URL)
-
     const res = await fetch(`${API_URL}/bairros/`, {
         cache: "no-store",
     });
@@ -29,7 +27,6 @@ export async function createBairro(data: Bairro): Promise<Bairro> {
     };
 
     console.log(payload)
-    console.log(API_URL)
 
     const res = await fetch(`${API_URL}/bairros/`, {
         method: "POST",
