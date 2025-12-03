@@ -65,6 +65,14 @@ export const bairros_exemplo:Bairro[] = [
     { id: 5, nome: "Paranoá Park", id_frequencia: 3},
 ]
 
+export const equipes_exemplo:Equipe[] = [
+    { id: 1, nome: "Equipe Cerrado", id_pesquisador: 2 },
+    { id: 2, nome: "Equipe Savana", id_pesquisador: 4 },
+    { id: 3, nome: "Equipe Linkin Park", id_pesquisador: 3 },
+    { id: 4, nome: "Equipe Campo Limpo", id_pesquisador: 1 },
+    { id: 5, nome: "Equipe Lírios", id_pesquisador: 5 },
+];
+
 export const tipos_exemplo:TipoUnidade[] = [
     { id_tipo_unidade: 1, tipo: "Desativada" },
     { id_tipo_unidade: 2, tipo: "Temporária" },
@@ -121,13 +129,6 @@ export const unidades_exemplo:Unidade[] = [
     },
 ];
 
-export const equipes_exemplo:Equipe[] = [
-    { id_equipe: 1, nome: "Equipe Cerrado", pesquisador: pesquisadores_exemplo[1] },
-    { id_equipe: 2, nome: "Equipe Savana", pesquisador: pesquisadores_exemplo[3] },
-    { id_equipe: 3, nome: "Equipe Linkin Park", pesquisador: pesquisadores_exemplo[2] },
-    { id_equipe: 4, nome: "Equipe Campo Limpo", pesquisador: pesquisadores_exemplo[0] },
-    { id_equipe: 5, nome: "Equipe Lírios", pesquisador: pesquisadores_exemplo[4] },
-];
 
 export const coletas_exemplo:Coleta[] = [
     {

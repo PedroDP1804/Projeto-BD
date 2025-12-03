@@ -1,5 +1,5 @@
 -- 1. Limpa as tabelas antes de inserir para evitar duplicidade (O CASCADE limpa os filhos também)
-TRUNCATE TABLE telefone_pesquisador, pesquisador, bairro, frequencia RESTART IDENTITY CASCADE;
+TRUNCATE TABLE telefone_pesquisador, pesquisador, bairro, frequencia, equipe RESTART IDENTITY CASCADE;
 
 -- 2. Inserir Pesquisadores (FORÇANDO O ID para garantir que seja 1, 2, 3...)
 INSERT INTO pesquisador (id, nome, email, cpf, data_nascimento, status)
@@ -40,8 +40,17 @@ INSERT INTO bairro (nome, id_frequencia) VALUES
 ('Del Lago', 4),
 ('Paranoa Park', 3);
 
--- 6. Ajustar os contadores (Sequences)
+-- 6. Insere as Equipes com os IDs de pesquisadores mapeados corretamente
+INSERT INTO equipe (id, nome, id_pesquisador) VALUES
+(1, 'Equipe Cerrado', 2),      -- Rafael (Index 1)
+(2, 'Equipe Savana', 4),       -- Carlos (Index 3)
+(3, 'Equipe Linkin Park', 3),  -- Juliana (Index 2)
+(4, 'Equipe Campo Limpo', 1),  -- Mariana (Index 0)
+(5, 'Equipe Lírios', 5);       -- Cleiton (Index 4)
+
+-- LAST. Ajustar os contadores (Sequences)
 -- Como forçamos os IDs, precisamos dizer ao banco onde parar para ele não tentar criar o ID 1 de novo na próxima chamada da API.
 SELECT setval('pesquisador_id_seq', (SELECT MAX(id) FROM pesquisador));
 SELECT setval('frequencia_id_seq', (SELECT MAX(id) FROM frequencia));
 SELECT setval('bairro_id_seq', (SELECT MAX(id) FROM bairro));
+SELECT setval('equipe_id_seq', (SELECT MAX(id) FROM equipe));

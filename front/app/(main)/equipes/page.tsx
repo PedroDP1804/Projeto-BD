@@ -1,37 +1,13 @@
 import { FormEquipe } from "@/app/(main)/equipes/_components/form_equipe";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { equipes_exemplo, pesquisadores_exemplo } from "@/lib/exemplos";
 import { Search } from "lucide-react";
 import { LinhaEquipe } from "./_components/linha_equipe";
 import { Header } from "@/app/_components/header";
-import { Equipe, Pesquisador } from "@/lib/interfaces";
+import { getEquipes } from "@/services/api_equipe";
+import { getPesquisadores } from "@/services/api_pesquisador";
 
 export default async function Home() {
-
-    // Busca equipes do BD
-    async function getEquipes(): Promise<Equipe[]> {
-
-        // ##----------------------------------------------------##
-        //  Inserir aqui chamada de API real
-
-        const result:Equipe[] = equipes_exemplo  // <---- aqui
-        // ##----------------------------------------------------##
-
-        return result;
-    }
-
-    // Busca pesquisadores do BD
-    async function getPesquisadores(): Promise<Pesquisador[]> {
-
-        // ##----------------------------------------------------##
-        //  Inserir aqui chamada de API real
-
-        const result:Pesquisador[] = pesquisadores_exemplo  // <---- aqui
-        // ##----------------------------------------------------##
-
-        return result;
-    }
 
     const equipes = await getEquipes();
     const pesquisadores = await getPesquisadores();

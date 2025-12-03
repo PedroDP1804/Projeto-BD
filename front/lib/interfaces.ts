@@ -20,9 +20,9 @@ export interface Bairro {
 }
 
 export interface Equipe {
-    id_equipe?: number,
+    id?: number,
     nome: string,
-    pesquisador: Pesquisador,
+    id_pesquisador: number,
 }
 
 export interface TipoUnidade {

@@ -1,21 +1,20 @@
 # naep/schemas/equipe_schema.py
 from pydantic import BaseModel
 
-
-# Schema recebido no POST
+# -------- Entrada (POST / PUT) --------
 class EquipeSchema(BaseModel):
     nome: str
-    id_pesquisador: int  # obrigatório segundo seu model
+    id_pesquisador: int
 
 
-# Objeto retornado pelo banco
+# -------- Saída do BD --------
 class EquipeDB(EquipeSchema):
-    id_equipe: int
+    id: int
 
     class Config:
         from_attributes = True
 
 
-# Schema retornado publicamente
+# -------- Schema público retornado nas rotas  --------
 class EquipePublic(EquipeDB):
     pass

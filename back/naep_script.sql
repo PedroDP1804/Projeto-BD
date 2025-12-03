@@ -34,6 +34,13 @@ CREATE TABLE bairro (
 	FOREIGN KEY (id_frequencia) REFERENCES frequencia(id)
 );
 
+CREATE TABLE equipe (
+	id SERIAL PRIMARY KEY NOT NULL,
+	nome VARCHAR(50),
+	id_pesquisador INT NOT NULL,
+	FOREIGN KEY (id_pesquisador) REFERENCES pesquisador(id)
+);
+
 CREATE TABLE pesquisa (
 	id_pesquisa SERIAL PRIMARY KEY NOT NULL,
 	descricao VARCHAR(50),
@@ -45,14 +52,6 @@ CREATE TABLE pesquisa (
 	FOREIGN KEY (id_frequencia) REFERENCES frequencia(id),
 	FOREIGN KEY (id_status_pesquisa) REFERENCES status_pesquisa(id_status_pesquisa)
 	FOREIGN KEY (id_equipe) REFERENCES equipe(id_equipe)
-);
-
-
-CREATE TABLE equipe (
-	id_equipe SERIAL PRIMARY KEY NOT NULL,
-	nome VARCHAR(50),
-	id_pesquisador INT NOT NULL,
-	FOREIGN KEY (id_pesquisador) REFERENCES pesquisador(id)
 );
 
 CREATE TABLE tipo_unidade_tratamento (

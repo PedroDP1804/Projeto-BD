@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { FormEquipe } from "./form_equipe";
 import { Equipe, Pesquisador } from "@/lib/interfaces";
+import { deleteEquipe } from "@/services/api_equipe";
 
 interface Props {
     equipe:Equipe,
@@ -15,22 +16,25 @@ interface Props {
 export function LinhaEquipe({ equipe, pesquisadores }:Props ) {
 
     const router = useRouter();
+    const pesquisador = pesquisadores.findLast((p)=>(p.id === equipe.id_pesquisador))
 
     // Deletar equipe
-    async function deleteEquipe(id?: number) {
+    async function excluirEquipe(id?: number) {
 
         if (!id) {
             alert("Id inválido");
             return;
         }
 
-        // ##----------------------------------------------------##
-        //  Inserir aqui a chamada de API
-        const result = true //resultado da chamada
-        
-        // ##----------------------------------------------------##
+        let ok = false
+        try {
+            await deleteEquipe(id)
+            ok = true
+        } catch (e) {
+            console.error(e)
+        }
 
-        if (result) {
+        if (ok) {
             alert(`Equipe "${equipe.nome}" (id=${id}) excluída com sucesso`);
             router.refresh();
         } else {
@@ -42,7 +46,7 @@ export function LinhaEquipe({ equipe, pesquisadores }:Props ) {
         <TableRow className="h-16">
 
             <TableCell className="indent-3">{equipe.nome}</TableCell>
-            <TableCell>{equipe.pesquisador.nome}</TableCell>
+            <TableCell>{pesquisador?.nome ?? "-"}</TableCell>
 
             <TableCell>
                 <div className="flex items-center gap-4">
@@ -56,7 +60,7 @@ export function LinhaEquipe({ equipe, pesquisadores }:Props ) {
                         <FormEquipe
                             tipo="editar"
                             pesquisadores={pesquisadores}
-                            id_editar={equipe.id_equipe}
+                            id_editar={equipe.id}
                             default_value={equipe}
                         />
                     </Dialog>
@@ -64,7 +68,7 @@ export function LinhaEquipe({ equipe, pesquisadores }:Props ) {
                     {/* Excluir */}
                     <button
                         type="button"
-                        onClick={() => deleteEquipe(equipe.id_equipe)}
+                        onClick={() => excluirEquipe(equipe.id)}
                         className="cursor-pointer"
                     >
                         <Trash2 className="text-red-500"/>

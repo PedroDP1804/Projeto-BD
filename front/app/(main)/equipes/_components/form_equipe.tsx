@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { FormEvent } from "react";
 import { DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Equipe, Pesquisador } from "@/lib/interfaces";
+import { createEquipe, updateEquipe } from "@/services/api_equipe";
 
 interface FormEquipeProps {
     tipo: "criar" | "editar",
@@ -22,34 +23,31 @@ export function FormEquipe({ tipo, pesquisadores, id_editar, default_value }: Fo
         const form_data = new FormData(event.currentTarget);
 
         const data:Equipe = {
-            id_equipe: id_editar,
+            id: id_editar,
             nome: form_data.get("nome") as string,
-            pesquisador: pesquisadores.filter((p)=>(p.id === Number(form_data.get("id_pesquisador") as string)))[0]
+            id_pesquisador: Number(form_data.get("id_pesquisador") as string)
         };
 
-        let result = false;
+        let ok = false;
 
+        // Chamada da API Create
         if (tipo === "criar") {
-            // ##----------------------------------------------------##
-            //  Inserir aqui a chamada de API pra CRIAR
-                // await funcaoAPI(data)
-                result = true
-                alert(JSON.stringify(data))
-                // alert(data.data_nascimento.toLocaleDateString("pt-br"))
-            // ##----------------------------------------------------##
+            const result = await createEquipe(data)
+            ok = !!result
         }
 
+        // Chamada da API Edit
         if (tipo === "editar") {
-            // ##----------------------------------------------------##
-            //  Inserir aqui a chamada de API pra EDITAR
-                // await funcaoAPI(data)
-                result = true
-                alert(JSON.stringify(data))
-                // alert(data.data_nascimento.toLocaleDateString("pt-br"))
-            // ##----------------------------------------------------##
+            if (!data.id) {
+                alert("Id inváido")
+                return
+            }
+            
+            const result = await updateEquipe(data.id, data)
+            ok = !!result
         }
 
-        if (result) {
+        if (ok) {
             alert(`Equipe ${tipo === "criar" ? "criada" : "editada"} com sucesso!`);
             router.refresh();
         } else {
@@ -86,7 +84,7 @@ export function FormEquipe({ tipo, pesquisadores, id_editar, default_value }: Fo
                     <select
                         name="id_pesquisador"
                         className="border px-3 py-2 rounded-md w-full"
-                        defaultValue={default_value?.pesquisador?.id ?? ""}
+                        defaultValue={default_value?.id_pesquisador ?? ""}
                         required
                     >
                         <option disabled value="">-- Selecione um Pesquisador --</option>

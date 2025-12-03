@@ -1,5 +1,3 @@
-# naep/routers/equipe_router.py
-
 from http import HTTPStatus
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
@@ -13,10 +11,12 @@ from naep.schemas.equipe_schema import (
 
 router = APIRouter(prefix="/equipes", tags=["equipes"])
 
-
+# -------------------------------
 # Criar equipe
+# -------------------------------
 @router.post("/", status_code=HTTPStatus.CREATED, response_model=EquipePublic)
 def create_equipe(equipe: EquipeSchema, db: Session = Depends(get_db)):
+
     nova_equipe = Equipe(
         nome=equipe.nome,
         id_pesquisador=equipe.id_pesquisador,
@@ -29,41 +29,53 @@ def create_equipe(equipe: EquipeSchema, db: Session = Depends(get_db)):
     return nova_equipe
 
 
-# Listar equipes
+# -------------------------------
+# Listar todas as equipes
+# -------------------------------
 @router.get("/", response_model=list[EquipePublic])
 def listar_equipes(db: Session = Depends(get_db)):
     return db.query(Equipe).all()
 
 
-# Obter equipe por ID
-@router.get("/{equipe_id}", response_model=EquipePublic)
-def get_equipe(equipe_id: int, db: Session = Depends(get_db)):
-    equipe = db.query(Equipe).filter(Equipe.id_equipe == equipe_id).first()
+# -------------------------------
+# Atualizar Equipe
+# -------------------------------
+@router.put("/{id}", response_model=EquipePublic)
+def update_equipe(id: int, data: EquipeSchema, db: Session = Depends(get_db)):
+
+    equipe = db.query(Equipe).filter(Equipe.id == id).first()
 
     if not equipe:
-        raise HTTPException(
-            status_code=HTTPStatus.NOT_FOUND,
-            detail="Equipe não encontrada",
-        )
+        raise HTTPException(status_code=404, detail="Equipe não encontrada")
 
-    return equipe
-
-
-# Atualizar equipe
-@router.put("/{equipe_id}", response_model=EquipePublic)
-def update_equipe(equipe_id: int, equipe: EquipeSchema, db: Session = Depends(get_db)):
-    equipe_db = db.query(Equipe).filter(Equipe.id_equipe == equipe_id).first()
-
-    if not equipe_db:
-        raise HTTPException(
-            status_code=HTTPStatus.NOT_FOUND,
-            detail="Equipe não encontrada",
-        )
-
-    equipe_db.nome = equipe.nome
-    equipe_db.id_pesquisador = equipe.id_pesquisador
+    # Atualizar campos
+    equipe.nome = data.nome
+    equipe.id_pesquisador = data.id_pesquisador
 
     db.commit()
-    db.refresh(equipe_db)
+    db.refresh(equipe)
 
-    return equipe_db
+    return EquipePublic(
+        id=equipe.id,
+        nome=equipe.nome,
+        id_pesquisador=equipe.id_pesquisador
+    )
+
+
+# -------------------------------
+# Deletar equipe
+# -------------------------------
+@router.delete("/{id}", response_model=bool)
+def delete_equipe(id: int, db: Session = Depends(get_db)):
+
+    equipe = db.query(Equipe).filter(
+        Equipe.id == id
+    ).first()
+
+    if not equipe:
+        raise HTTPException(status_code=404, detail="Bairro não encontrado")
+
+    db.delete(equipe)
+    db.commit()
+
+    return True
