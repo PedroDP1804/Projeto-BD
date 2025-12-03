@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Dialog, DialogTrigger, } from "@/components/ui/dialog";
 import { FormPesquisador } from "./form_pesquisador";
 import { Pesquisador } from "@/lib/interfaces";
-import { deletePesquisador } from "@/services/api";
+import { deletePesquisador } from "@/services/api_pesquisador";
 
 export function LinhaPesquisador({pesquisador}:{pesquisador:Pesquisador}) {
 

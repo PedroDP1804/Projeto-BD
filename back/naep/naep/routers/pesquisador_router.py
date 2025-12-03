@@ -1,15 +1,13 @@
-# naep/routers/pesquisador_router.py
-
 from http import HTTPStatus
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from typing import List
 
 from naep.dependencies import get_db
 from naep.models import Pesquisador, TelefonePesquisador
 from naep.schemas.pesquisador_schema import (
     PesquisadorSchema,
     PesquisadorPublic,
-    PesquisadorList,
 )
 from naep.schemas.schemas import Message
 
@@ -62,7 +60,7 @@ def create_pesquisador(data: PesquisadorSchema, db: Session = Depends(get_db)):
 # -------------------------------
 # Listar todos os pesquisadores
 # -------------------------------
-@router.get("/", response_model=PesquisadorList)
+@router.get("/", response_model=List[PesquisadorPublic])
 def listar_pesquisadores(db: Session = Depends(get_db)):
 
     pesquisadores = db.query(Pesquisador).all()
@@ -78,7 +76,7 @@ def listar_pesquisadores(db: Session = Depends(get_db)):
 
         resultado.append(PesquisadorPublic(**p.__dict__, telefones=tels))
 
-    return {"pesquisadores": resultado}
+    return resultado
 
 
 # -------------------------------

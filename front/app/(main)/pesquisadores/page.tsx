@@ -4,7 +4,7 @@ import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components
 import { Search } from "lucide-react";
 import { LinhaPesquisador } from "./_components/linha_pesquisador";
 import { Header } from "@/app/_components/header";
-import { getPesquisadores } from "@/services/api";
+import { getPesquisadores } from "@/services/api_pesquisador";
 
 export default async function Home() {
 

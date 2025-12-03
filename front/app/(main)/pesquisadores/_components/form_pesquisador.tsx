@@ -4,7 +4,7 @@ import { FormEvent } from "react";
 import { DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { TelefonesInput } from "./telefones_input";
 import { Pesquisador } from "@/lib/interfaces";
-import { createPesquisador, updatePesquisador } from "@/services/api";
+import { createPesquisador, updatePesquisador } from "@/services/api_pesquisador";
 
 interface FormPesquisadorProps {
     tipo: "criar"|"editar",
@@ -40,7 +40,8 @@ export function FormPesquisador({tipo, id_editar, default_value}:FormPesquisador
             const result = await createPesquisador(data)
             ok = !!result
         }
-
+        
+        // Chamada da API Edit
         if (tipo === "editar") {
             if (!data.id) {
                 alert("Id inváido")

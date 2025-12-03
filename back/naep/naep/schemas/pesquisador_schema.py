@@ -1,4 +1,3 @@
-# naep/schemas/pesquisador_schema.py
 from datetime import date
 from typing import List
 from pydantic import BaseModel, EmailStr
@@ -30,8 +29,3 @@ class PesquisadorDB(BaseModel):
 # -------- Exposição pública --------
 class PesquisadorPublic(PesquisadorDB):
     pass
-
-
-# -------- Lista --------
-class PesquisadorList(BaseModel):
-    pesquisadores: List[PesquisadorPublic]
