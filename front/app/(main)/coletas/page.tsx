@@ -1,40 +1,14 @@
 import { Header } from "@/app/_components/header";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { bairros_exemplo, coletas_exemplo, unidades_exemplo } from "@/lib/exemplos";
 import { Search } from "lucide-react";
-import { Bairro, Coleta, Unidade } from "@/lib/interfaces";
 import { FormColeta } from "./_components/form_coleta";
 import { LinhaColeta } from "./_components/linha_coleta";
+import { getColetas } from "@/services/api_coleta";
+import { getBairros } from "@/services/api_bairro";
+import { getUnidades } from "@/services/api_unidade";
 
 export default async function Page() {
-
-    // Busca coletas do BD
-    async function getColetas(): Promise<Coleta[]> {
-        // ##----------------------------------------------------##
-        //  Inserir aqui chamada de API real
-        const result: Coleta[] = coletas_exemplo;
-        // ##----------------------------------------------------##
-        return result;
-    }
-
-    // Busca bairros para o select do form
-    async function getBairros(): Promise<Bairro[]> {
-        // ##----------------------------------------------------##
-        //  Inserir aqui chamada de API real
-        const result: Bairro[] = bairros_exemplo;
-        // ##----------------------------------------------------##
-        return result;
-    }
-
-    // Busca unidades para o select do form
-    async function getUnidades(): Promise<Unidade[]> {
-        // ##----------------------------------------------------##
-        //  Inserir aqui chamada de API real
-        const result: Unidade[] = unidades_exemplo;
-        // ##----------------------------------------------------##
-        return result;
-    }
 
     const coletas = await getColetas();
     const bairros = await getBairros();

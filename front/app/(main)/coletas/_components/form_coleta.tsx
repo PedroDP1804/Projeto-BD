@@ -2,6 +2,7 @@
 
 import { DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Bairro, Coleta, Unidade } from "@/lib/interfaces";
+import { createColeta, updateColeta } from "@/services/api_coleta";
 import { useRouter } from "next/navigation";
 import { FormEvent } from "react";
 
@@ -24,37 +25,34 @@ export function FormColeta({ tipo, bairros, unidades, id_editar, default_value }
 
         // Monta o objeto Coleta com base nos IDs selecionados
         const data: Coleta = {
-            id_coleta: id_editar,
+            id: id_editar,
             descricao: form_data.get("descricao") as string,
             quantidade_kg: Number(form_data.get("quantidade_kg")),
             categoria: form_data.get("categoria") as string,
-            // Encontra o objeto bairro completo com base no ID selecionado
-            bairro: bairros.filter((b) => (b.id === Number(form_data.get("id_bairro"))))[0],
-            // Encontra o objeto unidade completo com base no ID selecionado
-            unidade_tratamento: unidades.filter((u) => (u.id_unidade === Number(form_data.get("id_unidade_tratamento"))))[0],
+            id_bairro: Number(form_data.get("id_bairro")),
+            id_unidade_tratamento: Number(form_data.get("id_unidade_tratamento")),
         };
 
-        let result = false;
+        let ok = false;
 
+        // Chamada da API Create
         if (tipo === "criar") {
-            // ##----------------------------------------------------##
-            //  Inserir aqui a chamada de API pra CRIAR
-            result = true;
-            console.log("Criando:", data); // Apenas para debug
-            alert(JSON.stringify(data));
-            // ##----------------------------------------------------##
+            const result = await createColeta(data)
+            ok = !!result
         }
 
+        // Chamada da API Edit
         if (tipo === "editar") {
-            // ##----------------------------------------------------##
-            //  Inserir aqui a chamada de API pra EDITAR
-            result = true;
-            console.log("Editando:", data); // Apenas para debug
-            alert(JSON.stringify(data));
-            // ##----------------------------------------------------##
+            if (!data.id) {
+                alert("Id inváido")
+                return
+            }
+            
+            const result = await updateColeta(data.id, data)
+            ok = !!result
         }
 
-        if (result) {
+        if (ok) {
             alert(`Coleta ${tipo === "criar" ? "criada" : "editada"} com sucesso!`);
             router.refresh();
         } else {
@@ -124,7 +122,7 @@ export function FormColeta({ tipo, bairros, unidades, id_editar, default_value }
                     <select
                         name="id_bairro"
                         className="border-2 px-2 py-3 mt-1 w-full rounded-md bg-white"
-                        defaultValue={default_value?.bairro?.id ?? ""}
+                        defaultValue={default_value?.id_bairro ?? ""}
                         required
                     >
                         <option disabled value="">-- Selecione o Bairro --</option>
@@ -142,12 +140,12 @@ export function FormColeta({ tipo, bairros, unidades, id_editar, default_value }
                     <select
                         name="id_unidade_tratamento"
                         className="border-2 px-2 py-3 mt-1 w-full rounded-md bg-white"
-                        defaultValue={default_value?.unidade_tratamento?.id_unidade ?? ""}
+                        defaultValue={default_value?.id_unidade_tratamento ?? ""}
                         required
                     >
                         <option disabled value="">-- Selecione a Unidade --</option>
                         {unidades.map((u) => (
-                            <option key={u.id_unidade} value={u.id_unidade}>
+                            <option key={u.id} value={u.id}>
                                 {u.nome}
                             </option>
                         ))}

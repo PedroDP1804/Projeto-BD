@@ -99,9 +99,9 @@ class Coleta:
     __tablename__ = "coleta"
 
     id: Mapped[int] = mapped_column(init=False, primary_key=True)
-    descricao: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
-    quantidade_kg: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
-    categoria: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
+    descricao: Mapped[str] = mapped_column(String(100))
+    quantidade_kg: Mapped[float] = mapped_column(Float)
+    categoria: Mapped[str] = mapped_column(String(20))
 
     id_bairro: Mapped[int] = mapped_column(ForeignKey("bairro.id"))
     id_unidade_tratamento: Mapped[int] = mapped_column(ForeignKey("unidade_tratamento.id"))

@@ -42,12 +42,12 @@ export interface Unidade {
 }
 
 export interface Coleta {
-    id_coleta?: number,
+    id?: number,
     descricao: string,
     quantidade_kg: number,
     categoria: string,
-    bairro: Bairro,
-    unidade_tratamento: Unidade,
+    id_bairro: number,
+    id_unidade_tratamento: number,
 }
 
 export interface StatusPesquisa {

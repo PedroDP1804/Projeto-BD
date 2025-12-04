@@ -8,6 +8,7 @@ from naep.routers import (
     pesquisas_router,
     status_pesquisa_router,
     unidade_tratamento_router,
+    coleta_router,
     routers
 )
 
@@ -36,6 +37,7 @@ app.include_router(equipe_router.router)
 app.include_router(bairro_router.router)
 app.include_router(status_pesquisa_router.router)
 app.include_router(unidade_tratamento_router.router)
+app.include_router(coleta_router.router)
 app.include_router(routers.router_frequencias)
 app.include_router(routers.router_tipos)
 

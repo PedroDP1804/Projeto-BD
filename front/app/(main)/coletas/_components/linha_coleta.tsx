@@ -6,6 +6,7 @@ import { SquarePen, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { FormColeta } from "./form_coleta";
 import { Bairro, Coleta, Unidade } from "@/lib/interfaces";
+import { deleteColeta } from "@/services/api_coleta";
 
 interface Props {
     coleta: Coleta;
@@ -16,21 +17,27 @@ interface Props {
 export function LinhaColeta({ coleta, bairros, unidades }: Props) {
 
     const router = useRouter();
+    
+    const bairro = bairros.findLast((b)=>(b.id == coleta.id_bairro))
+    const unidade = unidades.findLast((u)=>(u.id == coleta.id_unidade_tratamento))
 
     // Deletar coleta
-    async function deleteColeta(id?: number) {
+    async function excluirColeta(id?: number) {
 
         if (!id) {
             alert("Id inválido");
             return;
         }
 
-        // ##----------------------------------------------------##
-        //  Inserir aqui a chamada de API
-        const result = true //resultado da chamada
-        // ##----------------------------------------------------##
+        let ok = false
+        try {
+            await deleteColeta(id)
+            ok = true
+        } catch (e) {
+            console.error(e)
+        }
 
-        if (result) {
+        if (ok) {
             alert(`Coleta "${coleta.descricao}" (id=${id}) excluída com sucesso`);
             router.refresh();
         } else {
@@ -44,8 +51,8 @@ export function LinhaColeta({ coleta, bairros, unidades }: Props) {
             <TableCell className="indent-3">{coleta.descricao}</TableCell>
             <TableCell>{coleta.quantidade_kg.toFixed(2)}</TableCell>
             <TableCell>{coleta.categoria}</TableCell>
-            <TableCell>{coleta.bairro.nome}</TableCell>
-            <TableCell>{coleta.unidade_tratamento.nome}</TableCell>
+            <TableCell>{bairro?.nome}</TableCell>
+            <TableCell>{unidade?.nome}</TableCell>
 
             <TableCell>
                 <div className="flex items-center gap-4">
@@ -60,7 +67,7 @@ export function LinhaColeta({ coleta, bairros, unidades }: Props) {
                             tipo="editar"
                             bairros={bairros}
                             unidades={unidades}
-                            id_editar={coleta.id_coleta}
+                            id_editar={coleta.id}
                             default_value={coleta}
                         />
                     </Dialog>
@@ -68,7 +75,7 @@ export function LinhaColeta({ coleta, bairros, unidades }: Props) {
                     {/* Excluir */}
                     <button
                         type="button"
-                        onClick={() => deleteColeta(coleta.id_coleta)}
+                        onClick={() => excluirColeta(coleta.id)}
                         className="cursor-pointer"
                     >
                         <Trash2 className="text-red-500" />

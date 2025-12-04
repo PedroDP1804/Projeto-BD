@@ -10,7 +10,7 @@ export function Sidebar() {
         {texto:"Bairros", link:"/bairros", icon:<MapPin/>},
         {texto:"Coletas", link:"/coletas", icon:<Trash2/>},
         {texto:"Equipes", link:"/equipes", icon:<UsersRound/>},
-        {texto:"Pesquisas", link:"/pesquisas", icon:<Calendar/>},
+        {texto:"[OFF] Pesquisas", link:"/pesquisas", icon:<Calendar/>},
         {texto:"Unidades", link:"/unidades", icon:<Box/>},
         // ...
     ]

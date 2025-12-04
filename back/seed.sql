@@ -310,6 +310,14 @@ INSERT INTO unidade_tratamento (id, nome, endereco, estado, cidade, rua, id_tipo
 (4, 'Estação Saúde Itapoã Sul', 'QI 32 Lote 7', 'DF', 'Brasília', 'Rua das Acácias', 1),
 (5, 'Ponto de Atendimento Bem-Estar', 'Quadra 605 Conj. 4', 'DF', 'Brasília', 'Rua do Buriti', 3);
 
+-- 2.9. Inserir Coletas
+INSERT INTO coleta (id, descricao, quantidade_kg, categoria, id_bairro, id_unidade_tratamento) VALUES
+(1, 'Coleta de resíduos orgânicos domiciliares', 125, 'Orgânico', 2, 4),
+(2, 'Coleta de recicláveis secos da área comercial', 89, 'Recicláveis', 5, 1),
+(3, 'Coleta de entulho leve em via pública', 310, 'Entulho', 3, 2),
+(4, 'Coleta de resíduos verdes após poda', 450, 'Verde', 1, 5),
+(5, 'Coleta de volumosos em mutirão local', 520, 'Volumosos', 4, 3);
+
 -- LAST. Ajustar os contadores (Sequences)
 -- Como forçamos os IDs, precisamos dizer ao banco onde parar para ele não tentar criar o ID 1 de novo na próxima chamada da API.
 SELECT setval('pesquisador_id_seq', (SELECT MAX(id) FROM pesquisador));
@@ -318,3 +326,4 @@ SELECT setval('bairro_id_seq', (SELECT MAX(id) FROM bairro));
 SELECT setval('equipe_id_seq', (SELECT MAX(id) FROM equipe));
 SELECT setval('tipo_unidade_tratamento_id_seq', (SELECT MAX(id) FROM tipo_unidade_tratamento));
 SELECT setval('unidade_tratamento_id_seq', (SELECT MAX(id) FROM unidade_tratamento));
+SELECT setval('coleta_id_seq', (SELECT MAX(id) FROM coleta));

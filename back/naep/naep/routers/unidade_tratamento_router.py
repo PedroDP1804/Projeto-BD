@@ -12,7 +12,7 @@ from naep.schemas.unidade_tratamento_schema import (
     UnidadeTratamentoSchema,
 )
 
-router = APIRouter(prefix="/unidades", tags=["unidades  "])
+router = APIRouter(prefix="/unidades", tags=["unidades"])
 
 # -------------------------------
 # Criar Unidade de Tratamento
