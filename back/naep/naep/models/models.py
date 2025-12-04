@@ -77,7 +77,7 @@ class Pesquisa:
 class TipoUnidadeTratamento:
     __tablename__ = "tipo_unidade_tratamento"
 
-    id_tipo_uni_tratamento: Mapped[int] = mapped_column(init=False, primary_key=True)
+    id: Mapped[int] = mapped_column(init=False, primary_key=True)
     tipo: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
 
 
@@ -85,9 +85,9 @@ class TipoUnidadeTratamento:
 class UnidadeTratamento:
     __tablename__ = "unidade_tratamento"
 
-    id_unidade_tratamento: Mapped[int] = mapped_column(init=False, primary_key=True)
+    id: Mapped[int] = mapped_column(init=False, primary_key=True)
     nome: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
-    id_tipo_uni_tratamento: Mapped[int] = mapped_column(ForeignKey("tipo_unidade_tratamento.id_tipo_uni_tratamento"))
+    id_tipo_unidade: Mapped[int] = mapped_column(ForeignKey("tipo_unidade_tratamento.id"))
     endereco: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
     estado: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
     cidade: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
@@ -98,10 +98,10 @@ class UnidadeTratamento:
 class Coleta:
     __tablename__ = "coleta"
 
-    id_coleta: Mapped[int] = mapped_column(init=False, primary_key=True)
+    id: Mapped[int] = mapped_column(init=False, primary_key=True)
     descricao: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
     quantidade_kg: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
     categoria: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
 
     id_bairro: Mapped[int] = mapped_column(ForeignKey("bairro.id"))
-    id_unidade_tratamento: Mapped[int] = mapped_column(ForeignKey("unidade_tratamento.id_unidade_tratamento"))
+    id_unidade_tratamento: Mapped[int] = mapped_column(ForeignKey("unidade_tratamento.id"))

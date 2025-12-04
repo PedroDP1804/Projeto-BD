@@ -35,10 +35,10 @@ app.include_router(pesquisador_router.router)
 app.include_router(pesquisas_router.router)
 app.include_router(equipe_router.router)
 app.include_router(bairro_router.router)
-app.include_router(tipo_unidade_router.router)
 app.include_router(status_pesquisa_router.router)
 app.include_router(unidade_tratamento_router.router)
-app.include_router(routers.router)
+app.include_router(routers.router_frequencias)
+app.include_router(routers.router_tipos)
 
 
 @app.get("/", tags=["Root"])

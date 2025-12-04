@@ -1,24 +1,10 @@
 from pydantic import BaseModel
 
+# Schemas para models auxiliares
+
+
 class Message(BaseModel):
     message: str
-
-# class EnderecoSchema(BaseModel):
-#     rua: str
-#     cidade: str
-#     estado: str
-
-
-# -------------------------------
-# Tipo de Unidade de Tratamento
-# -------------------------------
-
-class TipoUniTratamentoSchema(BaseModel):
-    tipo: str
-
-
-class TipoUniTratamentoPublic(TipoUniTratamentoSchema):
-    id: int
 
 
 
@@ -30,4 +16,15 @@ class FrequenciaSchema(BaseModel):
     periodo: str
 
 class FrequenciaPublic(FrequenciaSchema):
+    id: int
+
+
+
+# -------------------------------
+# Tipo Unidade de Tratamento
+# -------------------------------
+class TipoUnidadeSchema(BaseModel):
+    tipo: str
+
+class TipoUnidadePublic(TipoUnidadeSchema):
     id: int
