@@ -53,3 +53,39 @@ SELECT setval('pesquisador_id_seq', (SELECT MAX(id) FROM pesquisador));
 SELECT setval('frequencia_id_seq', (SELECT MAX(id) FROM frequencia));
 SELECT setval('bairro_id_seq', (SELECT MAX(id) FROM bairro));
 SELECT setval('equipe_id_seq', (SELECT MAX(id) FROM equipe));
+
+
+
+-- Testando VIEW (mostra detalhes de coletas)
+INSERT INTO frequencia (periodo) VALUES ('Semanal');
+INSERT INTO bairro (nome, id_frequencia) VALUES ('Centro Histórico', 1);
+INSERT INTO tipo_unidade_tratamento (tipo) VALUES ('Reciclagem');
+INSERT INTO unidade_tratamento (nome, id_tipo_uni_tratamento, endereco, estado, cidade, rua) 
+VALUES ('Usina Eco', 1, 'Rua das Flores, 100', 'SP', 'São Paulo', 'Rua das Flores');
+INSERT INTO coleta (descricao, quantidade_kg, categoria, id_bairro, id_unidade_tratamento) 
+VALUES ('Coleta de Plásticos', 150.50, 'Plástico', 1, 1);
+INSERT INTO coleta (descricao, quantidade_kg, categoria, id_bairro, id_unidade_tratamento) 
+VALUES ('Coleta de Vidros', 80.00, 'Vidro', 1, 1);
+
+SELECT * FROM vw_detalhes_coleta;
+
+
+-- Testando TRIGGER (impede insercao de menores)
+INSERT INTO pesquisador (nome, email, cpf, data_nascimento, status) 
+VALUES ('Pesquisador Adulto', 'adulto@teste.com', '123.456.789-00', '2000-01-01', 'Ativo');
+
+SELECT * FROM pesquisador WHERE email = 'adulto@teste.com';
+
+INSERT INTO pesquisador (nome, email, cpf, data_nascimento, status) 
+VALUES ('Jovem Aprendiz', 'jovem@teste.com', '999.888.777-66', CURRENT_DATE - INTERVAL '10 years', 'Ativo');
+
+
+-- Testando PROCEDURE (altera o status de um pesquisador pelo cpf)
+INSERT INTO pesquisador (nome, email, cpf, data_nascimento, status) 
+VALUES ('Maria Alvo', 'maria@teste.com', '111.222.333-44', '1990-05-20', 'Ativo');
+
+SELECT nome, cpf, status FROM pesquisador WHERE cpf = '111.222.333-44';
+
+CALL sp_desativar_pesquisador('111.222.333-44');
+
+SELECT nome, cpf, status FROM pesquisador WHERE cpf = '111.222.333-44';
