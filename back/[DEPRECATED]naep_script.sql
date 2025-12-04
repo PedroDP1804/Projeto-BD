@@ -62,20 +62,21 @@ create table pesquisa (
 );
 
 create table tipo_unidade_tratamento (
-	id_tipo_uni_tratamento SERIAl primary key,
+	id SERIAl primary key,
 	tipo VARCHAR(20)
 );
 
 create table unidade_tratamento (
-	id_unidade_tratamento SERIAL primary key,
+	id SERIAL primary key,
 	nome VARCHAR(50),
-	id_tipo_uni_tratamento INT not null,
+	id_tipo_unidade INT not null,
 
 	endereco VARCHAR(50),
     estado VARCHAR(50),
     cidade VARCHAR(50),
     rua VARCHAR(50),
-	foreign key (id_tipo_uni_tratamento) references tipo_unidade_tratamento(id_tipo_uni_tratamento)
+	
+	foreign key (id_tipo_unidade) references tipo_unidade_tratamento(id)
 );
 
 create table coleta (

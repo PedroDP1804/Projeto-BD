@@ -88,30 +88,31 @@ create table pesquisa (
 );
 
 create table tipo_unidade_tratamento (
-	id_tipo_uni_tratamento SERIAl primary key,
+	id SERIAl primary key,
 	tipo VARCHAR(20)
 );
 
 create table unidade_tratamento (
-	id_unidade_tratamento SERIAL primary key,
+	id SERIAL primary key,
 	nome VARCHAR(50),
-	id_tipo_uni_tratamento INT not null,
+	id_tipo_unidade INT not null,
 
 	endereco VARCHAR(50),
     estado VARCHAR(50),
     cidade VARCHAR(50),
     rua VARCHAR(50),
-	foreign key (id_tipo_uni_tratamento) references tipo_unidade_tratamento(id_tipo_uni_tratamento)
+	
+	foreign key (id_tipo_unidade) references tipo_unidade_tratamento(id)
 );
 
 create table coleta (
-	id_coleta SERIAL primary key,
+	id SERIAL primary key,
 	descricao VARCHAR(100),
 	quantidade_kg FLOAT,
 	categoria VARCHAR(20),
 	id_bairro INT not null,
 	id_unidade_tratamento INT not null,
-	foreign key (id_unidade_tratamento) references unidade_tratamento(id_unidade_tratamento),
+	foreign key (id_unidade_tratamento) references unidade_tratamento(id),
 	foreign key (id_bairro) references bairro(id)
 );
 
@@ -120,7 +121,7 @@ create table coleta (
 create or replace
 view vw_detalhes_coleta as
 select
-	c.id_coleta,
+	c.id,
 	c.descricao,
 	c.quantidade_kg,
 	c.categoria,
@@ -133,7 +134,7 @@ inner join
 	c.id_bairro = b.id
 inner join 
     unidade_tratamento ut on
-	c.id_unidade_tratamento = ut.id_unidade_tratamento;
+	c.id_unidade_tratamento = ut.id;
 
 select
 	*
