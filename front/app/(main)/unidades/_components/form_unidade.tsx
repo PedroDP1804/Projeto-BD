@@ -4,6 +4,7 @@ import { DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog
 import { FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { TipoUnidade, Unidade } from "@/lib/interfaces";
+import { createUnidade, updateUnidade } from "@/services/api_unidade";
 
 interface Props {
     tipo: "criar" | "editar";
@@ -22,35 +23,32 @@ export function FormUnidade({ tipo, id_editar, default_value, tipos_unidade }: P
         const form_data = new FormData(event.currentTarget);
 
         const data:Unidade = {
-            id_unidade: id_editar,
+            id: id_editar,
             nome: form_data.get("nome") as string,
             endereco: form_data.get("endereco") as string,
             estado: form_data.get("estado") as string,
             cidade: form_data.get("cidade") as string,
             rua: form_data.get("rua") as string,
-            tipo: tipos_unidade.filter((t)=>(t.id_tipo_unidade === Number(form_data.get("id_tipo") as string)))[0]
+            id_tipo_unidade: Number(form_data.get("id_tipo") as string)
         };
 
         let ok = false
         
+        // Chamada da API Create
         if (tipo === "criar") {
-            // ##----------------------------------------------------##
-            //  Inserir aqui a chamada de API pra CRIAR
-                // await funcaoAPI(data)
-                ok = true
-                alert(JSON.stringify(data))
-                // alert(data.data_nascimento.toLocaleDateString("pt-br"))
-            // ##----------------------------------------------------##
+            const result = await createUnidade(data)
+            ok = !!result
         }
 
+        // Chamada da API Edit
         if (tipo === "editar") {
-            // ##----------------------------------------------------##
-            //  Inserir aqui a chamada de API pra EDITAR
-                // await funcaoAPI(data)
-                ok = true
-                alert(JSON.stringify(data))
-                // alert(data.data_nascimento.toLocaleDateString("pt-br"))
-            // ##----------------------------------------------------##
+            if (!data.id) {
+                alert("Id inváido")
+                return
+            }
+            
+            const result = await updateUnidade(data.id, data)
+            ok = !!result
         }
 
         if (ok) {
@@ -91,12 +89,12 @@ export function FormUnidade({ tipo, id_editar, default_value, tipos_unidade }: P
                         <select
                             name="id_tipo"
                             className="border px-3 py-2 rounded-md w-full"
-                            defaultValue={default_value?.tipo?.id_tipo_unidade ?? ""}
+                            defaultValue={default_value?.id_tipo_unidade ?? ""}
                             required
                         >
                             <option disabled value="">-- Selecione um Tipo --</option>
                             {tipos_unidade.map((t) => (
-                                <option key={t.id_tipo_unidade} value={t.id_tipo_unidade}>
+                                <option key={t.id} value={t.id}>
                                     {t.tipo}
                                 </option>
                             ))}

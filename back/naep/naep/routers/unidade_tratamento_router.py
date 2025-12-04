@@ -12,107 +12,111 @@ from naep.schemas.unidade_tratamento_schema import (
     UnidadeTratamentoSchema,
 )
 
-router = APIRouter(prefix="/unidades-tratamento", tags=["unidades-tratamento"])
+router = APIRouter(prefix="/unidades", tags=["unidades  "])
 
+# -------------------------------
+# Criar Unidade de Tratamento
+# -------------------------------
+@router.post("/", status_code=HTTPStatus.CREATED, response_model=UnidadeTratamentoPublic)
+def create_unidade(unidade: UnidadeTratamentoSchema, db: Session = Depends(get_db)):
 
-# CREATE --------------------------------------------------
-@router.post(
-    "/",
-    status_code=HTTPStatus.CREATED,
-    response_model=UnidadeTratamentoPublic,
-)
-def create_unidade(
-    unidade: UnidadeTratamentoSchema, db: Session = Depends(get_db)
-):
-    # Cria a instância do model
-    nova_unidade = UnidadeTratamento(**unidade.model_dump())
-
-    # O banco validará se id_tipo_uni_tratamento existe (Foreign Key)
+    nova_unidade = UnidadeTratamento(
+        nome=unidade.nome,
+        id_tipo_unidade=unidade.id_tipo_unidade,
+        endereco=unidade.endereco,
+        estado=unidade.estado,
+        cidade=unidade.cidade,
+        rua=unidade.rua
+    )  
+    
     db.add(nova_unidade)
     db.commit()
     db.refresh(nova_unidade)
 
-    return nova_unidade
+    return UnidadeTratamentoPublic(
+        id=nova_unidade.id,
+        nome=nova_unidade.nome,
+        id_tipo_unidade=nova_unidade.id_tipo_unidade,
+        endereco=nova_unidade.endereco,
+        estado=nova_unidade.estado,
+        cidade=nova_unidade.cidade,
+        rua=nova_unidade.rua
+    )
 
 
-# READ ALL ------------------------------------------------
+# -------------------------------
+# Listar todas as Unidades de Tratamento
+# -------------------------------
 @router.get("/", response_model=List[UnidadeTratamentoPublic])
 def listar_unidades(db: Session = Depends(get_db)):
-    return db.query(UnidadeTratamento).all()
 
+    unidades = db.query(UnidadeTratamento).all()
+    resultado = []
 
-# READ BY ID ----------------------------------------------
-@router.get(
-    "/{unidade_id}",
-    status_code=HTTPStatus.OK,
-    response_model=UnidadeTratamentoPublic,
-)
-def read_unidade_by_id(unidade_id: int, db: Session = Depends(get_db)):
-    unidade_db = (
-        db.query(UnidadeTratamento)
-        .filter(UnidadeTratamento.id_unidade_tratamento == unidade_id)
-        .first()
-    )
+    for u in unidades:
 
-    if not unidade_db:
-        raise HTTPException(
-            status_code=HTTPStatus.NOT_FOUND, detail="Unidade não encontrada"
+        resultado.append(
+            UnidadeTratamentoPublic(
+                id=u.id,
+                nome=u.nome,
+                id_tipo_unidade=u.id_tipo_unidade,
+                endereco=u.endereco,
+                estado=u.estado,
+                cidade=u.cidade,
+                rua=u.rua
+            )
         )
 
-    return unidade_db
+    return resultado
 
 
-# UPDATE --------------------------------------------------
-@router.put(
-    "/{unidade_id}",
-    response_model=UnidadeTratamentoPublic,
-)
-def update_unidade(
-    unidade_id: int,
-    unidade_schema: UnidadeTratamentoSchema,
-    db: Session = Depends(get_db),
-):
-    unidade_db = (
-        db.query(UnidadeTratamento)
-        .filter(UnidadeTratamento.id_unidade_tratamento == unidade_id)
-        .first()
-    )
+# -------------------------------
+# Atualizar Unidade de Tratamento
+# -------------------------------
+@router.put("/{id}", response_model=UnidadeTratamentoPublic)
+def update_unidade(id: int, data: UnidadeTratamentoSchema, db: Session = Depends(get_db)):
 
-    if not unidade_db:
-        raise HTTPException(
-            status_code=HTTPStatus.NOT_FOUND,
-            detail="Unidade não encontrada",
-        )
+    unidade = db.query(UnidadeTratamento).filter(UnidadeTratamento.id == id).first()
 
-    # Atualiza os campos
-    for key, value in unidade_schema.model_dump().items():
-        setattr(unidade_db, key, value)
+    if not unidade:
+        raise HTTPException(status_code=404, detail="Unidade não encontrada")
+
+    # Atualizar campos
+    unidade.nome=data.nome
+    unidade.id_tipo_unidade=data.id_tipo_unidade
+    unidade.endereco=data.endereco
+    unidade.estado=data.estado
+    unidade.cidade=data.cidade
+    unidade.rua=data.rua
 
     db.commit()
-    db.refresh(unidade_db)
+    db.refresh(unidade)
 
-    return unidade_db
-
-
-# DELETE --------------------------------------------------
-@router.delete(
-    "/{unidade_id}",
-    response_model=Message,
-)
-def delete_unidade(unidade_id: int, db: Session = Depends(get_db)):
-    unidade_db = (
-        db.query(UnidadeTratamento)
-        .filter(UnidadeTratamento.id_unidade_tratamento == unidade_id)
-        .first()
+    return UnidadeTratamentoPublic(
+        id=unidade.id,
+        nome=unidade.nome,
+        id_tipo_unidade=unidade.id_tipo_unidade,
+        endereco=unidade.endereco,
+        estado=unidade.estado,
+        cidade=unidade.cidade,
+        rua=unidade.rua
     )
 
-    if not unidade_db:
-        raise HTTPException(
-            status_code=HTTPStatus.NOT_FOUND,
-            detail="Unidade não encontrada",
-        )
 
-    db.delete(unidade_db)
+# -------------------------------
+# Deletar Unidade de Tratamento
+# -------------------------------
+@router.delete("/{id}", response_model=bool)
+def delete_unidade(id: int, db: Session = Depends(get_db)):
+
+    unidade = db.query(UnidadeTratamento).filter(
+        UnidadeTratamento.id == id
+    ).first()
+
+    if not unidade:
+        raise HTTPException(status_code=404, detail="Unidade não encontrada")
+
+    db.delete(unidade)
     db.commit()
 
-    return {"message": "Unidade deletada com sucesso"}
+    return True

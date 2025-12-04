@@ -41,7 +41,7 @@ def listar_frequencias(db: Session = Depends(get_db)):
 # -------------------------------
 # Tipo Unidade de Tratamento
 # -------------------------------
-router_tipos = APIRouter(prefix="/tipos_unidade", tags=["frequencias"])
+router_tipos = APIRouter(prefix="/tipos-unidade", tags=["tipos-unidade"])
 @router_tipos.get("/", response_model=List[TipoUnidadePublic])
 def listar_tipos_unidade(db: Session = Depends(get_db)):
 

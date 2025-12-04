@@ -8,7 +8,6 @@ from naep.routers import (
     pesquisas_router,
     status_pesquisa_router,
     unidade_tratamento_router,
-    tipo_unidade_router,
     routers
 )
 

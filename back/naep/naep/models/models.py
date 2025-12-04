@@ -86,12 +86,12 @@ class UnidadeTratamento:
     __tablename__ = "unidade_tratamento"
 
     id: Mapped[int] = mapped_column(init=False, primary_key=True)
-    nome: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
+    nome: Mapped[str] = mapped_column(String(50))
     id_tipo_unidade: Mapped[int] = mapped_column(ForeignKey("tipo_unidade_tratamento.id"))
-    endereco: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
-    estado: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
-    cidade: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
-    rua: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
+    endereco: Mapped[str] = mapped_column(String(50))
+    estado: Mapped[str] = mapped_column(String(50))
+    cidade: Mapped[str] = mapped_column(String(50))
+    rua: Mapped[str] = mapped_column(String(50))
 
 
 @mapped_as_dataclass(table_registry)

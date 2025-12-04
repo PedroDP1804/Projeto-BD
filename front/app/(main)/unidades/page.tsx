@@ -3,34 +3,14 @@ import { Table, TableBody, TableHeader, TableHead, TableRow } from "@/components
 import { LinhaUnidade } from "./_components/linha_unidade";
 import { FormUnidade } from "./_components/form_unidade";
 import { Search } from "lucide-react";
-import { tipos_exemplo, unidades_exemplo } from "@/lib/exemplos";
 import { Header } from "@/app/_components/header";
-import { TipoUnidade, Unidade } from "@/lib/interfaces";
+import { getUnidades } from "@/services/api_unidade";
+import { getTiposUnidade } from "@/services/apis";
 
 export default async function Home() {
-    
-    async function getUnidades() {
-        // ##----------------------------------------------------##
-        //  Inserir aqui a chamada de API
-
-        const result:Unidade[] = unidades_exemplo //<---- aqui
-        // ##----------------------------------------------------##
-        
-        return result
-    }
-
-    async function getTipos() {
-        // ##----------------------------------------------------##
-        //  Inserir aqui a chamada de API
-
-        const result:TipoUnidade[] = tipos_exemplo //<---- aqui
-        // ##----------------------------------------------------##
-        
-        return result
-    }
 
     const unidades = await getUnidades();
-    const tipos = await getTipos();
+    const tipos = await getTiposUnidade();
 
     return (
         <div className="px-5 pt-6">

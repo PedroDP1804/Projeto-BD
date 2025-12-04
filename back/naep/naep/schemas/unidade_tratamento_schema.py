@@ -1,22 +1,24 @@
 from typing import Optional
 from pydantic import BaseModel
 
-# Schema de entrada (POST/PUT)
+# -------- Entrada (POST / PUT) --------
 class UnidadeTratamentoSchema(BaseModel):
-    nome: Optional[str] = None
-    id_tipo_uni_tratamento: int
-    endereco: Optional[str] = None
-    estado: Optional[str] = None
-    cidade: Optional[str] = None
-    rua: Optional[str] = None
+    nome: str
+    id_tipo_unidade: int
+    endereco: str
+    estado: str
+    cidade: str
+    rua: str
 
-# Schema base do Banco (inclui ID)
+
+# -------- Saída do BD --------
 class UnidadeTratamentoDB(UnidadeTratamentoSchema):
-    id_unidade_tratamento: int
+    id: int
 
     class Config:
         from_attributes = True
 
-# Schema público de retorno
+
+# -------- Schema público retornado nas rotas --------
 class UnidadeTratamentoPublic(UnidadeTratamentoDB):
     pass

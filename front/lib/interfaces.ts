@@ -27,18 +27,18 @@ export interface Equipe {
 }
 
 export interface TipoUnidade {
-    id_tipo_unidade: number,
+    id: number,
     tipo: string,
 }
 
 export interface Unidade {
-    id_unidade?: number,
+    id?: number,
     nome: string,
     endereco: string,
     estado: string,
     cidade: string,
     rua: string,
-    tipo: TipoUnidade,
+    id_tipo_unidade: number,
 }
 
 export interface Coleta {

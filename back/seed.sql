@@ -294,9 +294,27 @@ INSERT INTO equipe (id, nome, id_pesquisador) VALUES
 (4, 'Equipe Campo Limpo', 1),  -- Mariana (Index 0)
 (5, 'Equipe Lírios', 5);       -- Cleiton (Index 4)
 
+-- 2.7. Inserir Tipos de Unidade de Tratamento
+INSERT INTO tipo_unidade_tratamento (id, tipo) VALUES
+(1, 'Desativada'),
+(2, 'Temporária'),
+(3, 'Básica'),
+(4, 'Intermediária'),
+(5, 'Avançada');
+
+-- 2.8. Insere as Unidades de Tratatmento com os IDs de tipos de unidade mapeados corretamente
+INSERT INTO unidade_tratamento (id, nome, endereco, estado, cidade, rua, id_tipo_unidade) VALUES
+(1, 'Unidade Itapoã Norte', 'Quadra 203 Conj. 6', 'DF', 'Brasília', 'Rua das Mangueiras', 2),
+(2, 'Centro de Tratamento Lago Azul', 'QI 10 Lote 18', 'DF', 'Brasília', 'Rua Ipê Amarelo', 5), 
+(3, 'Unidade Jardim Esperança', 'Quadra 425 Conj. 2', 'DF', 'Brasília', 'Rua do Cedro', 4),
+(4, 'Estação Saúde Itapoã Sul', 'QI 32 Lote 7', 'DF', 'Brasília', 'Rua das Acácias', 1),
+(5, 'Ponto de Atendimento Bem-Estar', 'Quadra 605 Conj. 4', 'DF', 'Brasília', 'Rua do Buriti', 3);
+
 -- LAST. Ajustar os contadores (Sequences)
 -- Como forçamos os IDs, precisamos dizer ao banco onde parar para ele não tentar criar o ID 1 de novo na próxima chamada da API.
 SELECT setval('pesquisador_id_seq', (SELECT MAX(id) FROM pesquisador));
 SELECT setval('frequencia_id_seq', (SELECT MAX(id) FROM frequencia));
 SELECT setval('bairro_id_seq', (SELECT MAX(id) FROM bairro));
 SELECT setval('equipe_id_seq', (SELECT MAX(id) FROM equipe));
+SELECT setval('tipo_unidade_tratamento_id_seq', (SELECT MAX(id) FROM tipo_unidade_tratamento));
+SELECT setval('unidade_tratamento_id_seq', (SELECT MAX(id) FROM unidade_tratamento));

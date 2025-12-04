@@ -6,6 +6,7 @@ import { Trash2, SquarePen } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { FormUnidade } from "./form_unidade";
 import { TipoUnidade, Unidade } from "@/lib/interfaces";
+import { deleteUnidade } from "@/services/api_unidade";
 
 export function LinhaUnidade({
     unidade,
@@ -16,18 +17,21 @@ export function LinhaUnidade({
 }) {
 
     const router = useRouter();
+    const tipo_unidade = tipos_unidade.findLast((t)=>(t.id == unidade.id_tipo_unidade))
 
-    async function deleteUnidade(id?: number) {
+    async function excluirUnidade(id?: number) {
         if (!id) {
             alert("Id inválido");
             return;
         }
 
-        // ##----------------------------------------------------##
-        //  Inserir aqui a chamada de API
-        const ok = true //resultado da chamada
-        
-        // ##----------------------------------------------------##
+        let ok = false
+        try {
+            await deleteUnidade(id)
+            ok = true
+        } catch (e) {
+            console.error(e)
+        }
 
         if (ok) {
             alert("Unidade excluída com sucesso");
@@ -40,7 +44,7 @@ export function LinhaUnidade({
     return (
         <TableRow className="h-16">
             <TableCell className="indent-3">{unidade.nome}</TableCell>
-            <TableCell>{unidade.tipo.tipo}</TableCell>
+            <TableCell>{tipo_unidade?.tipo}</TableCell>
             <TableCell>{unidade.endereco}</TableCell>
             <TableCell>{unidade.estado}</TableCell>
             <TableCell>{unidade.cidade}</TableCell>
@@ -57,7 +61,7 @@ export function LinhaUnidade({
 
                         <FormUnidade
                             tipo="editar"
-                            id_editar={unidade.id_unidade}
+                            id_editar={unidade.id}
                             default_value={unidade}
                             tipos_unidade={tipos_unidade}
                         />
@@ -67,7 +71,7 @@ export function LinhaUnidade({
                     <button
                         type="button"
                         className="cursor-pointer"
-                        onClick={() => deleteUnidade(unidade.id_unidade)}
+                        onClick={() => excluirUnidade(unidade.id)}
                     >
                         <Trash2 className="text-red-500"/>
                     </button>
