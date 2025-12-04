@@ -39,9 +39,9 @@ export function FormPesquisa({ tipo, equipes, frequencias, listaStatus, id_edita
             descricao: form_data.get("descricao") as string,
             data_inicio: new Date(dataInicioStr + 'T12:00:00'), 
             data_fim: new Date(dataFimStr + 'T12:00:00'),
-            frequencia: frequencias.find(f => f.id_frequencia === Number(form_data.get("id_frequencia")))!,
+            frequencia: frequencias.find(f => f.id === Number(form_data.get("id_frequencia")))!,
             status_pesquisa: listaStatus.find(s => s.id_status_pesquisa === Number(form_data.get("id_status")))!,
-            equipe: equipes.find(e => e.id_equipe === Number(form_data.get("id_equipe")))!,
+            equipe: equipes.find(e => e.id === Number(form_data.get("id_equipe")))!,
         };
 
         let ok = false;
@@ -127,12 +127,12 @@ export function FormPesquisa({ tipo, equipes, frequencias, listaStatus, id_edita
                     <select
                         name="id_frequencia"
                         className="w-full border border-gray-300 rounded-md px-3 py-2 bg-white"
-                        defaultValue={default_value?.frequencia?.id_frequencia ?? ""}
+                        defaultValue={default_value?.frequencia?.id ?? ""}
                         required
                     >
                         <option value="" disabled>-- Selecione --</option>
                         {frequencias.map(f => (
-                            <option key={f.id_frequencia} value={f.id_frequencia}>{f.periodo}</option>
+                            <option key={f.id} value={f.id}>{f.periodo}</option>
                         ))}
                     </select>
                 </div>
@@ -159,12 +159,12 @@ export function FormPesquisa({ tipo, equipes, frequencias, listaStatus, id_edita
                     <select
                         name="id_equipe"
                         className="w-full border border-gray-300 rounded-md px-3 py-2 bg-white"
-                        defaultValue={default_value?.equipe?.id_equipe ?? ""}
+                        defaultValue={default_value?.equipe?.id ?? ""}
                         required
                     >
                         <option value="" disabled>-- Selecione a Equipe --</option>
                         {equipes.map(e => (
-                            <option key={e.id_equipe} value={e.id_equipe}>{e.nome}</option>
+                            <option key={e.id} value={e.id}>{e.nome}</option>
                         ))}
                     </select>
                 </div>

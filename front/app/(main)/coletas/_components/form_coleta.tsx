@@ -29,7 +29,7 @@ export function FormColeta({ tipo, bairros, unidades, id_editar, default_value }
             quantidade_kg: Number(form_data.get("quantidade_kg")),
             categoria: form_data.get("categoria") as string,
             // Encontra o objeto bairro completo com base no ID selecionado
-            bairro: bairros.filter((b) => (b.id_bairro === Number(form_data.get("id_bairro"))))[0],
+            bairro: bairros.filter((b) => (b.id === Number(form_data.get("id_bairro"))))[0],
             // Encontra o objeto unidade completo com base no ID selecionado
             unidade_tratamento: unidades.filter((u) => (u.id_unidade === Number(form_data.get("id_unidade_tratamento"))))[0],
         };
@@ -124,12 +124,12 @@ export function FormColeta({ tipo, bairros, unidades, id_editar, default_value }
                     <select
                         name="id_bairro"
                         className="border-2 px-2 py-3 mt-1 w-full rounded-md bg-white"
-                        defaultValue={default_value?.bairro?.id_bairro ?? ""}
+                        defaultValue={default_value?.bairro?.id ?? ""}
                         required
                     >
                         <option disabled value="">-- Selecione o Bairro --</option>
                         {bairros.map((b) => (
-                            <option key={b.id_bairro} value={b.id_bairro}>
+                            <option key={b.id} value={b.id}>
                                 {b.nome}
                             </option>
                         ))}
