@@ -55,7 +55,8 @@ export default async function Home() {
                         {/* Cabeçalho da tabela */}
                         <TableHeader className="bg-gray-100">
                             <TableRow>
-                                <TableHead className="indent-3">Nome</TableHead>
+                                <TableHead className="indent-3">Foto</TableHead>
+                                <TableHead>Nome</TableHead>
                                 <TableHead>Email</TableHead>
                                 <TableHead>CPF</TableHead>
                                 <TableHead>Data Nascimento</TableHead>

@@ -38,6 +38,7 @@ export async function createPesquisador(data: Pesquisador): Promise<Pesquisador>
 
     const payload = {
         nome: data.nome,
+        foto_base64: data.foto_base64,
         email: data.email,
         cpf: data.cpf,
         data_nascimento: data.data_nascimento.toISOString().split('T')[0],
@@ -65,6 +66,7 @@ export async function createPesquisador(data: Pesquisador): Promise<Pesquisador>
 export async function updatePesquisador(id: number, data: Pesquisador): Promise<Pesquisador> {
     const payload = {
         nome: data.nome,
+        foto_base64: data.foto_base64,
         email: data.email,
         cpf: data.cpf,
         data_nascimento: data.data_nascimento.toISOString().split('T')[0],

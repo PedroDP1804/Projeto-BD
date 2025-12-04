@@ -1,7 +1,7 @@
 from datetime import date
 from typing import Optional
 
-from sqlalchemy import Date, Float, ForeignKey, String
+from sqlalchemy import Date, Float, ForeignKey, String, LargeBinary
 from sqlalchemy.orm import Mapped, mapped_as_dataclass, mapped_column, registry
 
 table_registry = registry()
@@ -13,6 +13,7 @@ class Pesquisador:
 
     id: Mapped[int] = mapped_column(init=False, primary_key=True)
     nome: Mapped[str] = mapped_column(String(100))
+    foto: Mapped[Optional[bytes]] = mapped_column(LargeBinary, nullable=True)
     email: Mapped[str] = mapped_column(String(50))
     cpf: Mapped[str] = mapped_column(String(20))
     data_nascimento: Mapped[date] = mapped_column(Date)

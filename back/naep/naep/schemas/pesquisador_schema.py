@@ -6,6 +6,7 @@ from pydantic import BaseModel, EmailStr
 # -------- Entrada (POST / PUT) --------
 class PesquisadorSchema(BaseModel):
     nome: str
+    foto_base64: str | None = None
     email: EmailStr
     cpf: str
     data_nascimento: date
@@ -13,14 +14,8 @@ class PesquisadorSchema(BaseModel):
     telefones: list[str]
 
 # -------- Saída do BD --------
-class PesquisadorDB(BaseModel):
+class PesquisadorDB(PesquisadorSchema):
     id: int
-    nome: str
-    email: str
-    cpf: str
-    data_nascimento: date
-    status: str
-    telefones: List[str] = []
 
     class Config:
         from_attributes = True

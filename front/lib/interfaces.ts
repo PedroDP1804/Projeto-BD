@@ -1,6 +1,7 @@
 export interface Pesquisador {
     id?: number,
     nome: string,
+    foto_base64?: string|null,
     email: string,
     cpf: string,
     data_nascimento: Date,

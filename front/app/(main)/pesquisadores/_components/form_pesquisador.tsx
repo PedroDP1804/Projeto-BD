@@ -1,10 +1,11 @@
 "use client"
 import { useRouter } from "next/navigation";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { TelefonesInput } from "./telefones_input";
 import { Pesquisador } from "@/lib/interfaces";
 import { createPesquisador, updatePesquisador } from "@/services/api_pesquisador";
+import Image from "next/image";
 
 interface FormPesquisadorProps {
     tipo: "criar"|"editar",
@@ -17,6 +18,21 @@ export function FormPesquisador({tipo, id_editar, default_value}:FormPesquisador
     // hook para atualizar a página
     const router = useRouter()
 
+    // preview da foto
+    const [preview, setPreview] = useState<string | null>(default_value?.foto_base64 || null);
+
+    // Função para converter Arquivo -> Base64
+    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPreview(reader.result as string); // Isso gera a string "data:image..."
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
     // edita o pesquisador no BD e atualiza a página
     async function handleSubmit(event:FormEvent<HTMLFormElement>) {
         event.preventDefault()
@@ -25,6 +41,7 @@ export function FormPesquisador({tipo, id_editar, default_value}:FormPesquisador
         const formData = new FormData(event.currentTarget)
         const data:Pesquisador = {
             id: (tipo == "editar" ? id_editar : undefined),
+            foto_base64: preview,
             nome: formData.get("nome") as string,
             email: formData.get("email") as string,
             cpf: formData.get("cpf") as string,
@@ -69,7 +86,7 @@ export function FormPesquisador({tipo, id_editar, default_value}:FormPesquisador
                 </DialogTitle>
             </DialogHeader>
 
-            <form onSubmit={handleSubmit}> 
+            <form onSubmit={handleSubmit} className="overflow-scroll max-h-[80vh]"> 
                 {/* Campo Nome */}
                 <h2 className="text-lg">
                     Nome
@@ -82,6 +99,35 @@ export function FormPesquisador({tipo, id_editar, default_value}:FormPesquisador
                     className="border-2 indent-2 px-2 py-3 mt-1 w-[90%] rounded-md min-w-[200px]"
                     required={tipo=="criar"}
                 />
+
+                {/* Campo Foto */}
+                <h2 className="text-lg mt-4">
+                    Foto
+                </h2>
+                <div className="flex flex-col w-[150px]">
+                    {/* Preview da foto */}
+                    { preview != null ? 
+                        <Image
+                        className="rounded-lg"
+                        src={preview}
+                            alt="foto_preview"
+                            height={150}
+                            width={150}
+                            />
+                            :
+                            <p className="text-nowrap">Nenhuma imagem selecionada...</p>
+                        }
+                    {/* Input de arquivo */}
+                    <label className="cursor-pointer bg-gray-200 rounded-md w-full border border-gray-500 text-center mt-1 py-1">
+                        Escolher imagem
+                        <input
+                            type="file" 
+                            accept="image/*" 
+                            className="hidden"
+                            onChange={handleImageChange}
+                        />
+                    </label>
+                </div>
 
                 {/* Campo Email */}
                 <h2 className="text-lg mt-4">

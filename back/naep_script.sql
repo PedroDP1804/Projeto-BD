@@ -3,10 +3,11 @@ CREATE DATABASE naep;
 CREATE TABLE pesquisador (
 	id SERIAL PRIMARY KEY NOT NULL,
 	nome VARCHAR(100),
+	foto BYTEA,
 	email VARCHAR(50),
-	cpf INT,
+	cpf CHAR(14),
 	data_nascimento DATE,
-	status VARCHAR(10),
+	status VARCHAR(10)
 )
 
 CREATE TABLE telefone_pesquisador (
@@ -39,6 +40,7 @@ CREATE TABLE equipe (
 	nome VARCHAR(50),
 	id_pesquisador INT NOT NULL,
 	FOREIGN KEY (id_pesquisador) REFERENCES pesquisador(id)
+		ON DELETE CASCADE
 );
 
 CREATE TABLE pesquisa (

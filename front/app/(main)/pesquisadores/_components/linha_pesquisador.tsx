@@ -6,6 +6,7 @@ import { Dialog, DialogTrigger, } from "@/components/ui/dialog";
 import { FormPesquisador } from "./form_pesquisador";
 import { Pesquisador } from "@/lib/interfaces";
 import { deletePesquisador } from "@/services/api_pesquisador";
+import Image from "next/image";
 
 export function LinhaPesquisador({pesquisador}:{pesquisador:Pesquisador}) {
 
@@ -19,6 +20,8 @@ export function LinhaPesquisador({pesquisador}:{pesquisador:Pesquisador}) {
             alert("Id inválido")
             return
         }
+
+        if (!confirm("Se esse pesquisador for responsável por alguma pesquisa, ela também será excluída. Tem certeza que deseja prosseguir?")) return
         
         let ok = true
         try {
@@ -42,7 +45,22 @@ export function LinhaPesquisador({pesquisador}:{pesquisador:Pesquisador}) {
             <TableRow
                 className="h-16"
             >
-                <TableCell className="indent-3">{pesquisador.nome}</TableCell>
+                <TableCell className="indent-3">
+                    {!pesquisador.foto_base64 || pesquisador.foto_base64 === null ?
+                        <p>[]</p>
+                    :
+                        <div className="overflow-hidden rounded-md w-fit">
+                            <Image
+                                src={pesquisador.foto_base64}
+                                alt="foto_pesquisador"
+                                height={60}
+                                width={60}
+                            />
+                        </div>
+                    }
+                </TableCell>
+
+                <TableCell>{pesquisador.nome}</TableCell>
                 <TableCell>{pesquisador.email}</TableCell>
                 <TableCell>{pesquisador.cpf}</TableCell>
                 <TableCell>{pesquisador.data_nascimento.toLocaleDateString("pt-br")}</TableCell>
