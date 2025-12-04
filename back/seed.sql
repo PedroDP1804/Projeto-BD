@@ -318,6 +318,22 @@ INSERT INTO coleta (id, descricao, quantidade_kg, categoria, id_bairro, id_unida
 (4, 'Coleta de resíduos verdes após poda', 450, 'Verde', 1, 5),
 (5, 'Coleta de volumosos em mutirão local', 520, 'Volumosos', 4, 3);
 
+-- 2.10. Inserir Status de Pesquisa
+INSERT INTO status_pesquisa (id_status_pesquisa, status) VALUES
+(1, 'Planejamento'),
+(2, 'Em Andamento'),
+(3, 'Análise de Dados'),
+(4, 'Concluída'),
+(5, 'Cancelada');
+
+-- 2.10. Inserir Pesquisas
+INSERT INTO pesquisa (id_pesquisa, descricao, data_inicio, data_fim, id_frequencia, id_status_pesquisa, id_equipe) VALUES
+(1, 'Levantamento Socioeconômico Norte', '10/01/2025', '20/12/2025', 1, 2, 3),
+(2, 'Monitoramento de Qualidade da Água', '01/02/2025', '01/08/2025', 2, 1, 5),
+(3, 'Censo de Arborização Urbana', '15/03/2025', '30/03/2025', 3, 4, 1),
+(4, 'Mapeamento de Pontos de Descarte', '05/04/2025', '05/10/2025', 1, 2, 4),
+(5, 'Análise de Tráfego e Mobilidade', '20/01/2025', '20/06/2025', 4, 3, 2);
+
 -- LAST. Ajustar os contadores (Sequences)
 -- Como forçamos os IDs, precisamos dizer ao banco onde parar para ele não tentar criar o ID 1 de novo na próxima chamada da API.
 SELECT setval('pesquisador_id_seq', (SELECT MAX(id) FROM pesquisador));
@@ -327,3 +343,5 @@ SELECT setval('equipe_id_seq', (SELECT MAX(id) FROM equipe));
 SELECT setval('tipo_unidade_tratamento_id_seq', (SELECT MAX(id) FROM tipo_unidade_tratamento));
 SELECT setval('unidade_tratamento_id_seq', (SELECT MAX(id) FROM unidade_tratamento));
 SELECT setval('coleta_id_seq', (SELECT MAX(id) FROM coleta));
+SELECT setval('status_pesquisa_id_status_pesquisa_seq', (SELECT MAX(id_status_pesquisa) FROM status_pesquisa));
+SELECT setval('pesquisa_id_pesquisa_seq', (SELECT MAX(id_pesquisa) FROM pesquisa));

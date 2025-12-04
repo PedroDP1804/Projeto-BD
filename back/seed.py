@@ -8,7 +8,7 @@ load_dotenv("naep/.env")
 db_url = getenv("DATABASE_URL")
 
 
-file = open('seed.sql', 'r')
+file = open('seed.sql', 'r', encoding='utf-8')
 query = file.read()
 file.close() 
 
